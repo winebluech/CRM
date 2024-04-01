@@ -15,7 +15,7 @@ import com.crm.service.OrderService;
 public class OrderController {
 
 	@Autowired
-	OrderService orderservice;
+	private OrderService orderservice;
 	
 	@RequestMapping("/orderList")
 	public String home(Model model) {

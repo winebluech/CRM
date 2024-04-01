@@ -7,7 +7,7 @@ import java.util.List;
 public class Order {
 
 	private String id;
-	private String orderType;
+	private Integer orderType;
 	private Date orderDate;
 	private String orderCode;
 	
@@ -20,7 +20,18 @@ public class Order {
 	private String productName;
 	private Double quantity;
 	private Double weight;
+	/**
+	 * 单价
+	 */
 	private BigDecimal unitprice;
+	/**
+	 * 总价
+	 */
+	private BigDecimal totalPrice;
+	/**
+	 * 预计盈利
+	 */
+	private BigDecimal profit;
 	
 	
 	
@@ -45,11 +56,44 @@ public class Order {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getOrderType() {
+
+	
+	
+	public Integer getOrderType() {
 		return orderType;
 	}
-	public void setOrderType(String orderType) {
+	public void setOrderType(Integer orderType) {
 		this.orderType = orderType;
+	}
+	public String getProductCode() {
+		return productCode;
+	}
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public Double getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(Double quantity) {
+		this.quantity = quantity;
+	}
+	public Double getWeight() {
+		return weight;
+	}
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+	public BigDecimal getUnitprice() {
+		return unitprice;
+	}
+	public void setUnitprice(BigDecimal unitprice) {
+		this.unitprice = unitprice;
 	}
 	public Date getOrderDate() {
 		return orderDate;
@@ -122,6 +166,23 @@ public class Order {
 	}
 	public void setAlternatefieldthree(BigDecimal alternatefieldthree) {
 		this.alternatefieldthree = alternatefieldthree;
+	}
+	public BigDecimal getTotalPrice() {
+		BigDecimal b1=new BigDecimal(getQuantity());
+		BigDecimal b2=new BigDecimal(getWeight());
+		BigDecimal b3=getUnitprice();
+		BigDecimal b4=new BigDecimal(1000);
+		return b3.multiply(b1.divide(b4.divide(b2,BigDecimal.ROUND_CEILING),BigDecimal.ROUND_CEILING));
+	}
+	public void setTotalPrice(BigDecimal totalPrice) {
+
+		this.totalPrice = totalPrice;
+	}
+	public BigDecimal getProfit() {
+		return profit;
+	}
+	public void setProfit(BigDecimal profit) {
+		this.profit = profit;
 	}
 
 	

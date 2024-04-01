@@ -63,23 +63,29 @@
                       <th >#</th>
                       <th>订单编号</th>
                       <th>产品名称</th>
+                       <th>单价(吨)</th>
                       <th>数量（桶）</th>
-                      <th>单价</th>
+                       <th>重量</th>
                       <th>总金额</th>
+                      <th>预计盈利</th>
                        <th>订单状态</th>
                        <th ></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr th:each="order , orderstatus : ${orderList}">
-                      <td th:text="${orderstatus.index+1}">1.</td>
+                      <td th:text="${orderstatus.index+1}">1</td>
                       <td th:text="${order.orderCode}">20220409001</td>
-                      <td th:text="${order.orderProduct.productCode}">白乳胶 </td>
-                      <td th:text="${order.orderProduct.quantity}+'桶'">8</td>
-                      <td th:text="${order.orderProduct.unitprice}">2200</td>
-                      <td th:text="${order.orderProduct.quantity}">200</td>
+                      <td th:text="${order.productCode}">白乳胶 </td>
+                       <td th:text="${order.unitprice}">2200</td>
+                      <td th:text="${order.quantity}+'桶'">8</td>
+                      <td th:text="${order.weight}+'kg'">8</td>
+                      <td th:text="${order.totalPrice}">200</td>
+                      <td th:text="${order.totalPrice}">200</td>
                           <td>
-                          <span class="badge bg-success">完成</span>
+                          <span class="badge bg-success"  th:if="${order.orderStatus == '0'}">出库</span>
+                          <span class="badge bg-success" th:if="${order.orderStatus == '1'}">完成</span>
+                          <span class="badge bg-danger" th:if="${order.orderStatus == '-1'}">退货</span>
                           </td>
                            <td>
 <button type="button" class="btn btn-block bg-gradient-warning btn-sm" style="width: 67px;display: inline-block;">
