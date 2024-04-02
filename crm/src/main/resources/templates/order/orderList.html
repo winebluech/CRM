@@ -1,161 +1,421 @@
-<!DOCTYPE html>
-<html lang="en" style="height: auto;" xmlns:th="http://www.thymeleaf.org"><head>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Simple Tables</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/images/favicon.ico">
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    <title>Deposito Admin - Dashboard  Blank Page </title>
+  
+	<!-- Vendors Style-->
+	<link rel="stylesheet" href="/css/vendors_css.css">
+	  
+	<!-- Style-->  
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/skin_color.css">	
+
 </head>
-<body class="sidebar-mini" style="height: auto;">
+<body class="hold-transition light-skin sidebar-mini theme-primary fixed">
+	
 <div class="wrapper">
-  <!-- Navbar -->
- 
-  <!-- Navbar -->
-	<div th:replace="/common/left :: Navbar"></div>
-  <!-- /.navbar -->
-  <!-- Main Sidebar Container -->
-  <div th:replace="/common/left :: menu"></div>
+	<div id="loader"></div>
+
+  
+  
+  <div th:replace="index :: header"></div>
+  <div th:replace="index :: menu"></div>
+  
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="min-height: 1302.4px;">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>订单列表</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">首页</a></li>
-              <li class="breadcrumb-item active">订单-出库</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+  <div class="content-wrapper">
+	  <div class="container-full">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="d-flex align-items-center">
+				<div class="me-auto">
+					<h4 class="page-title">Orders</h4>
+					<div class="d-inline-block align-items-center">
+						<nav>
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
+								<li class="breadcrumb-item" aria-current="page">e-Commerce</li>
+								<li class="breadcrumb-item active" aria-current="page">Orders</li>
+							</ol>
+						</nav>
+					</div>
+				</div>
+				
+			</div>
+		</div>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <!-- <h3 class="card-title">Bordered Table</h3> -->
-                 <span style="float:left">出库</span>
-                <span style="float:right">
-                <button type="button" class="btn btn-block bg-gradient-success btn-sm" style="width: 67px;display: inline-block;">
-<i class="fas fa-edit"></i>添加</button>
-                </span>
-                
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body table-responsive p-0">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th >#</th>
-                      <th>订单编号</th>
-                      <th>产品名称</th>
-                       <th>单价(吨)</th>
-                      <th>数量（桶）</th>
-                       <th>重量</th>
-                      <th>总金额</th>
-                      <th>预计盈利</th>
-                       <th>订单状态</th>
-                       <th ></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="order , orderstatus : ${orderList}">
-                      <td th:text="${orderstatus.index+1}">1</td>
-                      <td th:text="${order.orderCode}">20220409001</td>
-                      <td th:text="${order.productCode}">白乳胶 </td>
-                       <td th:text="${order.unitprice}">2200</td>
-                      <td th:text="${order.quantity}+'桶'">8</td>
-                      <td th:text="${order.weight}+'kg'">8</td>
-                      <td th:text="${order.totalPrice}">200</td>
-                      <td >200</td>
-                          <td>
-                          <span class="badge bg-success"  th:if="${order.orderStatus == '0'}">出库</span>
-                          <span class="badge bg-success" th:if="${order.orderStatus == '1'}">完成</span>
-                          <span class="badge bg-danger" th:if="${order.orderStatus == '-1'}">退货</span>
-                          </td>
-                           <td>
-<button type="button" class="btn btn-block bg-gradient-warning btn-sm" style="width: 67px;display: inline-block;">
-<i class="fas fa-edit"></i>修改</button>
-                        
-<button type="button" class="btn btn-block bg-gradient-danger btn-sm" style="width: 67px;display: inline-block;margin-top: 0px;">
-<i class="fas fa-edit"></i>删除</button>
-                          </td>
-                    </tr>
-                    
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <ul class="pagination pagination-sm m-0 float-right">
-                  <li class="page-item"><a class="page-link" href="#">«</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">»</a></li>
-                </ul>
-              </div>
-            </div>
-            
+		<!-- Main content -->
+		<section class="content">
 
-            
-            
-          </div>
-          <!-- /.col -->
-          
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-        
-        <!-- /.row -->
-        
-        <!-- /.row -->
-        
-        <!-- /.row -->
-        
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+		  <div class="row">
+			  <div class="col-12">
+				<div class="box">
+				  <div class="box-body">
+					<div class="table-responsive">
+						<table id="productorder" class="table table-hover no-wrap product-order" data-page-size="10">
+							<thead>
+								<tr>
+                    			 <th>订单编号</th>
+                     			 <th>产品名称</th>
+                      			 <th>单价(吨)</th>
+                      			 <th>数量（桶）</th>
+                      			 <th>重量</th>
+                      			 <th>总金额</th>
+                      			 <th>预计盈利</th>
+                      			  <th>订单日期</th>
+                       			 <th>订单状态</th>
+                      			 <th ></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							<tr th:each="order , orderstatus : ${orderList}">
+								<td >
+								<a href="javascript:void(0)" th:text="${order.orderCode}">Order #123456</a>
+								</td>
+                      			<td th:text="${order.productCode}">白乳胶 </td>
+                       			<td th:text="${order.unitprice}">2200</td>
+                      			<td th:text="${order.quantity}+'桶'">8</td>
+                     			<td th:text="${order.weight}+'kg'">8</td>
+                      			<td th:text="${order.totalPrice}">200</td>
+                      			<td th:text="${order.totalPrice}">200</td>
+                      			<td th:text="${#dates.format(order.orderDate,'yyyy-MM-dd')}">200</td>
+								<td>
+								<span class="badge badge-pill badge-warning" th:if="${order.orderStatus == '0'}">出库</span>
+								<span class="badge badge-pill badge-warning" th:if="${order.orderStatus == '1'}">完成</span>
+								<span class="badge badge-pill badge-warning" th:if="${order.orderStatus == '-1'}">退货</span>
+								</td>
+									<td><a href="javascript:void(0)" class="text-info me-10" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+											<i class="ti-marker-alt"></i>
+										</a> 
+										<a href="javascript:void(0)" class="text-danger" data-bs-original-title="Delete" data-bs-toggle="tooltip">
+											<i class="ti-trash"></i>
+										</a>
+									</td>
+								</tr>
+
+							</tbody>						
+						</table>
+					</div>
+				  </div>
+				</div>
+			  </div>		  
+		  </div>
+
+		</section>
+		<!-- /.content -->
+	  </div>
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="float-right d-none d-sm-block">
-      <b>Version</b> 3.2.0
+ 
+   <footer class="main-footer">
+    <div class="pull-right d-none d-sm-inline-block">
+        <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
+		  <li class="nav-item">
+			<a class="nav-link" href="javascript:void(0)">FAQ</a>
+		  </li>
+		  <li class="nav-item">
+			<a class="nav-link" href="#">Purchase Now</a>
+		  </li>
+		</ul>
     </div>
-    <strong>Copyright © 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+	  &copy; <script>document.write(new Date().getFullYear())</script> <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights By <a href="http://www.bootstrapMB.com/">bootstrapmb</a>.
   </footer>
-
   <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark" style="display: none;">
-    <!-- Control sidebar content goes here -->
-  <div class="p-3 control-sidebar-content" style=""><h5>Customize AdminLTE</h5><hr class="mb-2"><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Dark Mode</span></div><h6>Header Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Dropdown Legacy Offset</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>No border</span></div><h6>Sidebar Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Collapsed</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><div class="mb-1"><input type="checkbox" value="1" checked="checked" class="mr-1"><span>Sidebar Mini</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Mini MD</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Mini XS</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Flat Style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Legacy Style</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Compact</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Child Indent</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Nav Child Hide on Collapse</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Disable Hover/Focus Auto-Expand</span></div><h6>Footer Options</h6><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Fixed</span></div><h6>Small Text Options</h6><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Body</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Navbar</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Brand</span></div><div class="mb-1"><input type="checkbox" value="1" class="mr-1"><span>Sidebar Nav</span></div><div class="mb-4"><input type="checkbox" value="1" class="mr-1"><span>Footer</span></div><h6>Navbar Variants</h6><div class="d-flex"><select class="custom-select mb-3 text-light border-0 bg-white"><option class="bg-primary">Primary</option><option class="bg-secondary">Secondary</option><option class="bg-info">Info</option><option class="bg-success">Success</option><option class="bg-danger">Danger</option><option class="bg-indigo">Indigo</option><option class="bg-purple">Purple</option><option class="bg-pink">Pink</option><option class="bg-navy">Navy</option><option class="bg-lightblue">Lightblue</option><option class="bg-teal">Teal</option><option class="bg-cyan">Cyan</option><option class="bg-dark">Dark</option><option class="bg-gray-dark">Gray dark</option><option class="bg-gray">Gray</option><option class="bg-light">Light</option><option class="bg-warning">Warning</option><option class="bg-white">White</option><option class="bg-orange">Orange</option></select></div><h6>Accent Color Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Dark Sidebar Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 text-light border-0 bg-primary"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Light Sidebar Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-warning">Warning</option><option class="bg-info">Info</option><option class="bg-danger">Danger</option><option class="bg-success">Success</option><option class="bg-indigo">Indigo</option><option class="bg-lightblue">Lightblue</option><option class="bg-navy">Navy</option><option class="bg-purple">Purple</option><option class="bg-fuchsia">Fuchsia</option><option class="bg-pink">Pink</option><option class="bg-maroon">Maroon</option><option class="bg-orange">Orange</option><option class="bg-lime">Lime</option><option class="bg-teal">Teal</option><option class="bg-olive">Olive</option></select><h6>Brand Logo Variants</h6><div class="d-flex"></div><select class="custom-select mb-3 border-0"><option>None Selected</option><option class="bg-primary">Primary</option><option class="bg-secondary">Secondary</option><option class="bg-info">Info</option><option class="bg-success">Success</option><option class="bg-danger">Danger</option><option class="bg-indigo">Indigo</option><option class="bg-purple">Purple</option><option class="bg-pink">Pink</option><option class="bg-navy">Navy</option><option class="bg-lightblue">Lightblue</option><option class="bg-teal">Teal</option><option class="bg-cyan">Cyan</option><option class="bg-dark">Dark</option><option class="bg-gray-dark">Gray dark</option><option class="bg-gray">Gray</option><option class="bg-light">Light</option><option class="bg-warning">Warning</option><option class="bg-white">White</option><option class="bg-orange">Orange</option><a href="#">clear</a></select></div></aside>
+  <aside class="control-sidebar">
+	  
+	<div class="rpanel-title"><span class="pull-right btn btn-circle btn-danger" data-toggle="control-sidebar"><i class="ion ion-close text-white"></i></span> </div>  <!-- Create the tabs -->
+    <ul class="nav nav-tabs control-sidebar-tabs">
+      <li class="nav-item"><a href="#control-sidebar-home-tab" data-bs-toggle="tab" class="active"><i class="mdi mdi-message-text"></i></a></li>
+      <li class="nav-item"><a href="#control-sidebar-settings-tab" data-bs-toggle="tab"><i class="mdi mdi-playlist-check"></i></a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+      <!-- Home tab content -->
+      <div class="tab-pane active" id="control-sidebar-home-tab">
+          <div class="flexbox">
+			<a href="javascript:void(0)" class="text-grey">
+				<i class="ti-more"></i>
+			</a>	
+			<p>Users</p>
+			<a href="javascript:void(0)" class="text-end text-grey"><i class="ti-plus"></i></a>
+		  </div>
+		  <div class="lookup lookup-sm lookup-right d-none d-lg-block">
+			<input type="text" name="s" placeholder="Search" class="w-p100">
+		  </div>
+          <div class="media-list media-list-hover mt-20">
+			<div class="media py-10 px-0">
+			  <a class="avatar avatar-lg status-success" href="#">
+				<img src="../images/avatar/1.jpg" alt="...">
+			  </a>
+			  <div class="media-body">
+				<p class="fs-16">
+				  <a class="hover-primary" href="#"><strong>Tyler</strong></a>
+				</p>
+				<p>Praesent tristique diam...</p>
+				  <span>Just now</span>
+			  </div>
+			</div>
+
+			<div class="media py-10 px-0">
+			  <a class="avatar avatar-lg status-danger" href="#">
+				<img src="../images/avatar/2.jpg" alt="...">
+			  </a>
+			  <div class="media-body">
+				<p class="fs-16">
+				  <a class="hover-primary" href="#"><strong>Luke</strong></a>
+				</p>
+				<p>Cras tempor diam ...</p>
+				  <span>33 min ago</span>
+			  </div>
+			</div>
+
+			<div class="media py-10 px-0">
+			  <a class="avatar avatar-lg status-warning" href="#">
+				<img src="../images/avatar/3.jpg" alt="...">
+			  </a>
+			  <div class="media-body">
+				<p class="fs-16">
+				  <a class="hover-primary" href="#"><strong>Evan</strong></a>
+				</p>
+				<p>In posuere tortor vel...</p>
+				  <span>42 min ago</span>
+			  </div>
+			</div>
+
+			<div class="media py-10 px-0">
+			  <a class="avatar avatar-lg status-primary" href="#">
+				<img src="../images/avatar/4.jpg" alt="...">
+			  </a>
+			  <div class="media-body">
+				<p class="fs-16">
+				  <a class="hover-primary" href="#"><strong>Evan</strong></a>
+				</p>
+				<p>In posuere tortor vel...</p>
+				  <span>42 min ago</span>
+			  </div>
+			</div>			
+			
+			<div class="media py-10 px-0">
+			  <a class="avatar avatar-lg status-success" href="#">
+				<img src="../images/avatar/1.jpg" alt="...">
+			  </a>
+			  <div class="media-body">
+				<p class="fs-16">
+				  <a class="hover-primary" href="#"><strong>Tyler</strong></a>
+				</p>
+				<p>Praesent tristique diam...</p>
+				  <span>Just now</span>
+			  </div>
+			</div>
+
+			<div class="media py-10 px-0">
+			  <a class="avatar avatar-lg status-danger" href="#">
+				<img src="../images/avatar/2.jpg" alt="...">
+			  </a>
+			  <div class="media-body">
+				<p class="fs-16">
+				  <a class="hover-primary" href="#"><strong>Luke</strong></a>
+				</p>
+				<p>Cras tempor diam ...</p>
+				  <span>33 min ago</span>
+			  </div>
+			</div>
+
+			<div class="media py-10 px-0">
+			  <a class="avatar avatar-lg status-warning" href="#">
+				<img src="../images/avatar/3.jpg" alt="...">
+			  </a>
+			  <div class="media-body">
+				<p class="fs-16">
+				  <a class="hover-primary" href="#"><strong>Evan</strong></a>
+				</p>
+				<p>In posuere tortor vel...</p>
+				  <span>42 min ago</span>
+			  </div>
+			</div>
+
+			<div class="media py-10 px-0">
+			  <a class="avatar avatar-lg status-primary" href="#">
+				<img src="../images/avatar/4.jpg" alt="...">
+			  </a>
+			  <div class="media-body">
+				<p class="fs-16">
+				  <a class="hover-primary" href="#"><strong>Evan</strong></a>
+				</p>
+				<p>In posuere tortor vel...</p>
+				  <span>42 min ago</span>
+			  </div>
+			</div>
+			  
+		  </div>
+
+      </div>
+      <!-- /.tab-pane -->
+      <!-- Settings tab content -->
+      <div class="tab-pane" id="control-sidebar-settings-tab">
+          <div class="flexbox">
+			<a href="javascript:void(0)" class="text-grey">
+				<i class="ti-more"></i>
+			</a>	
+			<p>Todo List</p>
+			<a href="javascript:void(0)" class="text-end text-grey"><i class="ti-plus"></i></a>
+		  </div>
+        <ul class="todo-list mt-20">
+			<li class="py-15 px-5 by-1">
+			  <!-- checkbox -->
+			  <input type="checkbox" id="basic_checkbox_1" class="filled-in">
+			  <label for="basic_checkbox_1" class="mb-0 h-15"></label>
+			  <!-- todo text -->
+			  <span class="text-line">Nulla vitae purus</span>
+			  <!-- Emphasis label -->
+			  <small class="badge bg-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
+			  <!-- General tools such as edit or delete-->
+			  <div class="tools">
+				<i class="fa fa-edit"></i>
+				<i class="fa fa-trash-o"></i>
+			  </div>
+			</li>
+			<li class="py-15 px-5">
+			  <!-- checkbox -->
+			  <input type="checkbox" id="basic_checkbox_2" class="filled-in">
+			  <label for="basic_checkbox_2" class="mb-0 h-15"></label>
+			  <span class="text-line">Phasellus interdum</span>
+			  <small class="badge bg-info"><i class="fa fa-clock-o"></i> 4 hours</small>
+			  <div class="tools">
+				<i class="fa fa-edit"></i>
+				<i class="fa fa-trash-o"></i>
+			  </div>
+			</li>
+			<li class="py-15 px-5 by-1">
+			  <!-- checkbox -->
+			  <input type="checkbox" id="basic_checkbox_3" class="filled-in">
+			  <label for="basic_checkbox_3" class="mb-0 h-15"></label>
+			  <span class="text-line">Quisque sodales</span>
+			  <small class="badge bg-warning"><i class="fa fa-clock-o"></i> 1 day</small>
+			  <div class="tools">
+				<i class="fa fa-edit"></i>
+				<i class="fa fa-trash-o"></i>
+			  </div>
+			</li>
+			<li class="py-15 px-5">
+			  <!-- checkbox -->
+			  <input type="checkbox" id="basic_checkbox_4" class="filled-in">
+			  <label for="basic_checkbox_4" class="mb-0 h-15"></label>
+			  <span class="text-line">Proin nec mi porta</span>
+			  <small class="badge bg-success"><i class="fa fa-clock-o"></i> 3 days</small>
+			  <div class="tools">
+				<i class="fa fa-edit"></i>
+				<i class="fa fa-trash-o"></i>
+			  </div>
+			</li>
+			<li class="py-15 px-5 by-1">
+			  <!-- checkbox -->
+			  <input type="checkbox" id="basic_checkbox_5" class="filled-in">
+			  <label for="basic_checkbox_5" class="mb-0 h-15"></label>
+			  <span class="text-line">Maecenas scelerisque</span>
+			  <small class="badge bg-primary"><i class="fa fa-clock-o"></i> 1 week</small>
+			  <div class="tools">
+				<i class="fa fa-edit"></i>
+				<i class="fa fa-trash-o"></i>
+			  </div>
+			</li>
+			<li class="py-15 px-5">
+			  <!-- checkbox -->
+			  <input type="checkbox" id="basic_checkbox_6" class="filled-in">
+			  <label for="basic_checkbox_6" class="mb-0 h-15"></label>
+			  <span class="text-line">Vivamus nec orci</span>
+			  <small class="badge bg-info"><i class="fa fa-clock-o"></i> 1 month</small>
+			  <div class="tools">
+				<i class="fa fa-edit"></i>
+				<i class="fa fa-trash-o"></i>
+			  </div>
+			</li>
+			<li class="py-15 px-5 by-1">
+			  <!-- checkbox -->
+			  <input type="checkbox" id="basic_checkbox_7" class="filled-in">
+			  <label for="basic_checkbox_7" class="mb-0 h-15"></label>
+			  <!-- todo text -->
+			  <span class="text-line">Nulla vitae purus</span>
+			  <!-- Emphasis label -->
+			  <small class="badge bg-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
+			  <!-- General tools such as edit or delete-->
+			  <div class="tools">
+				<i class="fa fa-edit"></i>
+				<i class="fa fa-trash-o"></i>
+			  </div>
+			</li>
+			<li class="py-15 px-5">
+			  <!-- checkbox -->
+			  <input type="checkbox" id="basic_checkbox_8" class="filled-in">
+			  <label for="basic_checkbox_8" class="mb-0 h-15"></label>
+			  <span class="text-line">Phasellus interdum</span>
+			  <small class="badge bg-info"><i class="fa fa-clock-o"></i> 4 hours</small>
+			  <div class="tools">
+				<i class="fa fa-edit"></i>
+				<i class="fa fa-trash-o"></i>
+			  </div>
+			</li>
+			<li class="py-15 px-5 by-1">
+			  <!-- checkbox -->
+			  <input type="checkbox" id="basic_checkbox_9" class="filled-in">
+			  <label for="basic_checkbox_9" class="mb-0 h-15"></label>
+			  <span class="text-line">Quisque sodales</span>
+			  <small class="badge bg-warning"><i class="fa fa-clock-o"></i> 1 day</small>
+			  <div class="tools">
+				<i class="fa fa-edit"></i>
+				<i class="fa fa-trash-o"></i>
+			  </div>
+			</li>
+			<li class="py-15 px-5">
+			  <!-- checkbox -->
+			  <input type="checkbox" id="basic_checkbox_10" class="filled-in">
+			  <label for="basic_checkbox_10" class="mb-0 h-15"></label>
+			  <span class="text-line">Proin nec mi porta</span>
+			  <small class="badge bg-success"><i class="fa fa-clock-o"></i> 3 days</small>
+			  <div class="tools">
+				<i class="fa fa-edit"></i>
+				<i class="fa fa-trash-o"></i>
+			  </div>
+			</li>
+		  </ul>
+      </div>
+      <!-- /.tab-pane -->
+    </div>
+  </aside>
   <!-- /.control-sidebar -->
-<div id="sidebar-overlay"></div></div>
+  
+  <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+  <div class="control-sidebar-bg"></div>
+</div>
 <!-- ./wrapper -->
-
-<!-- jQuery -->
-<script src="/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-
+	
+	<!-- ./side demo panel -->
+	
+	<!-- Sidebar -->
+	
+	
+	
+	<!-- Page Content overlay -->
+	
+	
+	<!-- Vendor JS -->
+	<script src="/js/vendors.min.js"></script>
+	<script src="/js/pages/chat-popup.js"></script>
+    <script src="/assets/icons/feather-icons/feather.min.js"></script>	<script src="../assets/vendor_components/datatable/datatables.min.js"></script>
+	
+	<!-- Deposito Admin App -->
+	<script src="/js/template.js"></script>    
+	    
+	<script src="/js/pages/data-table.js"></script>
+	
 
 </body>
 </html>

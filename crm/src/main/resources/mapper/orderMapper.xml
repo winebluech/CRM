@@ -49,7 +49,7 @@
     
     <select id="queryOrderByOrderType" parameterType="int" resultMap="baseResult">
       SELECT 
-      T1.ordercode,t1.orderstatus,t2.productcode,t2.quantity,t2.unitprice,
+      T1.ordercode,t1.orderdate,t1.orderstatus,t2.productcode,t2.quantity,t2.unitprice,
       t2.weight,t3.productname as productname ,t3.remark as productname2 
       FROM `order` T1 , order_product T2 ,productinfo T3 
       WHERE T1.ordercode=T2.ordercode AND T2.productcode=T3.producecode 
