@@ -17,13 +17,20 @@ public class OrderController {
 	@Autowired
 	private OrderService orderservice;
 	
-	@RequestMapping("/orderList")
-	public String home(Model model) {
+	@RequestMapping("/orderOutList")
+	public String orderOutList(Model model) {
 		List<Order> orderList=orderservice.QueryAllOutOrders();
 		
 		model.addAttribute("orderList", orderList);
 		System.out.println("orderlist________________"+orderList.size());
 		return "order/orderList";
+	}
+	
+	@RequestMapping("/orderAddPage")
+	public String orderAddPage(Model model) {
+		
+		System.out.println("orderlist______________5__");
+		return "order/orderAdd";
 	}
 	
 }

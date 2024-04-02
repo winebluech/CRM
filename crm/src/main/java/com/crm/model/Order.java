@@ -1,6 +1,7 @@
 package com.crm.model;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -167,12 +168,14 @@ public class Order {
 	public void setAlternatefieldthree(BigDecimal alternatefieldthree) {
 		this.alternatefieldthree = alternatefieldthree;
 	}
-	public BigDecimal getTotalPrice() {
+	public String getTotalPrice() {
 		BigDecimal b1=new BigDecimal(getQuantity());
 		BigDecimal b2=new BigDecimal(getWeight());
 		BigDecimal b3=getUnitprice();
 		BigDecimal b4=new BigDecimal(1000);
-		return b3.multiply(b1.divide(b4.divide(b2,BigDecimal.ROUND_CEILING),BigDecimal.ROUND_CEILING));
+		DecimalFormat df=new DecimalFormat("0.00");
+		//df.format(b3.multiply(b1.divide(b4.divide(b2))));
+		return df.format(b3.multiply(b1.divide(b4.divide(b2))));
 	}
 	public void setTotalPrice(BigDecimal totalPrice) {
 
