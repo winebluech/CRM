@@ -5,46 +5,60 @@ import java.util.Date;
 public class ProductInfo {
 
 	private String id;
-	private String productcode;
-	private Date pricedate;
-	private String price;
-	private String weight;
+	private String productCode;
+	private String productName;
+	private String contactPersion;
+	private String phone;
+	private String address;
 	private String is_delete;
+	private String remark;
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getProductcode() {
-		return productcode;
+	public String getProductCode() {
+		return productCode;
 	}
-	public void setProductcode(String productcode) {
-		this.productcode = productcode;
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
 	}
-	public Date getPricedate() {
-		return pricedate;
+	public String getProductName() {
+		return productName;
 	}
-	public void setPricedate(Date pricedate) {
-		this.pricedate = pricedate;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
-	public String getPrice() {
-		return price;
+	public String getContactPersion() {
+		return contactPersion;
 	}
-	public void setPrice(String price) {
-		this.price = price;
+	public void setContactPersion(String contactPersion) {
+		this.contactPersion = contactPersion;
 	}
-	public String getWeight() {
-		return weight;
+	public String getPhone() {
+		return phone;
 	}
-	public void setWeight(String weight) {
-		this.weight = weight;
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public String getIs_delete() {
 		return is_delete;
 	}
 	public void setIs_delete(String is_delete) {
 		this.is_delete = is_delete;
+	}
+	public String getRemark() {
+		return remark;
+	}
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 	
 	

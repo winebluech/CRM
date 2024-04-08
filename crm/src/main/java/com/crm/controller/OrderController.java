@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.crm.model.Order;
+import com.crm.model.ProductInfo;
 import com.crm.service.OrderService;
 
 @Controller
@@ -26,11 +27,12 @@ public class OrderController {
 		return "order/orderList";
 	}
 	
-	@RequestMapping("/orderAddPage")
+	@RequestMapping("/orderaddpage")
 	public String orderAddPage(Model model) {
 		
-		System.out.println("orderlist______________5__");
-		return "order/orderAdd";
+		List<ProductInfo> productList=orderservice.toAddOrderOutService();
+		model.addAttribute("productList", productList);
+		return "order/orderOutAdd";
 	}
 	
 }

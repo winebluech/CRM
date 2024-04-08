@@ -5,15 +5,40 @@
 
 $(function () {
     "use strict";
+           var lang = {
+            "sProcessing": "处理中...",
+            "sLengthMenu": "每页 _MENU_ 项",
+            "sZeroRecords": "没有匹配结果",
+            "sInfo": "当前显示第 _START_ 至 _END_ 项，共 _TOTAL_ 项。",
+            "sInfoEmpty": "当前显示第 0 至 0 项，共 0 项",
+            "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+            "sInfoPostFix": "",
+            "sSearch": "搜索:",
+            "sUrl": "",
+            "sEmptyTable": "表中数据为空",
+            "sLoadingRecords": "载入中...",
+            "sInfoThousands": ",",
+            "oPaginate": {
+                "sFirst": "首页",
+                "sPrevious": "上页",
+                "sNext": "下页",
+                "sLast": "末页",
+                "sJump": "跳转"
+            },
+            "oAria": {
+                "sSortAscending": ": 以升序排列此列",
+                "sSortDescending": ": 以降序排列此列"
+            }
+        };
 
     $('#example1').DataTable();
     $('#example2').DataTable({
       'paging'      : true,
-      'lengthChange': false,
+      'lengthChange': true,
       'searching'   : false,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : false
+      'autoWidth'   : true
     });
 	
 	
@@ -30,18 +55,42 @@ $(function () {
 	  'searching'   : true,
 	  'ordering'    : true,
 	  'info'        : true,
-	  'autoWidth'   : false,
+	  'autoWidth'   : false
+	 
 	});
 	
-	$('#productorder').DataTable({
+$.fn.dataTable.ext.buttons.alert = {
+    className: 'waves-effect waves-light btn btn-success mb-5',
+ 
+    action: function (e, dt, node, config) {
+        window.location.href="/order/orderaddpage";
+    }
+};
+	
+	var table=$('#productorder').DataTable({
+		language:lang,
 	  'paging'      : true,
 	  'lengthChange': true,
 	  'searching'   : true,
 	  'ordering'    : true,
-	  'info'        : true,
+	 /* 'info'        : true,*/
 	  'autoWidth'   : false,
+	   layout: {
+       bottom: 'paging'
+    },
+	   dom: 'Bfrtip',
+	    buttons: [
+                {
+                    extend: 'alert',
+                    text: '添加'
+                }
+            ]
 	});
 	
+
+	/*table.buttons().container()
+    .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );*/
+
 
 	$('#complex_header').DataTable();
 	

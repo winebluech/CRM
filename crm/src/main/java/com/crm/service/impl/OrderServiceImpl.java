@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.crm.dao.OrderDao;
+import com.crm.dao.ProductInfoDao;
 import com.crm.model.Order;
 import com.crm.model.OrderProduct;
+import com.crm.model.ProductInfo;
 import com.crm.service.OrderService;
 
 @Service
@@ -21,6 +23,8 @@ public class OrderServiceImpl implements OrderService {
 	
 	  @Autowired 
 	  private OrderDao orderDao;
+	  @Autowired
+	  private ProductInfoDao productInfoDao;
 	 
 	 
 	
@@ -33,19 +37,6 @@ public class OrderServiceImpl implements OrderService {
 	public List<Order> QueryAllOutOrders(){
 		
 		
-		/*
-		 * Order order =new Order(); order.setOrderCode("20240103");
-		 * order.setOrderStatus("0"); order.setOrderDate(new Date()); OrderProduct
-		 * op=new OrderProduct(); op.setProductCode("PT-100"); op.setQuantity(50);
-		 * op.setUnitprice(new BigDecimal(2200)); op.setWeight("50kg");
-		 * List<OrderProduct> lo= new ArrayList<OrderProduct>(); lo.add(op); for
-		 * (OrderProduct orderProduct : lo) { order.setOrderProduct(orderProduct); }
-		 * 
-		 * List<Order> orderList=new ArrayList<Order>();
-		 * 
-		 * orderList.add(order); orderList.add(order);
-		 */
-		
 		List<Order> orderList=orderDao.queryOrderByOrderType(1);
 		
 		return orderList;
@@ -54,5 +45,13 @@ public class OrderServiceImpl implements OrderService {
 	public List<Order> QueryAllInOrders(){
 		List<Order> orderList=orderDao.queryOrderByOrderType(0);
 		return orderList;
+	}
+
+	@Override
+	public List<ProductInfo> toAddOrderOutService() {
+		
+		List<ProductInfo> productInfoList=productInfoDao.queryAllProductInfo();
+		
+		return productInfoList;
 	}
 }

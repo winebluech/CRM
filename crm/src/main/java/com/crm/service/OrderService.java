@@ -3,6 +3,7 @@ package com.crm.service;
 import java.util.List;
 
 import com.crm.model.Order;
+import com.crm.model.ProductInfo;
 
 public interface OrderService {
 
@@ -22,4 +23,9 @@ public interface OrderService {
 	 * @return
 	 */
 	public List<Order> QueryAllInOrders();
+	/**
+	 * 
+	 * @return
+	 */
+	public List<ProductInfo> toAddOrderOutService();
 }
