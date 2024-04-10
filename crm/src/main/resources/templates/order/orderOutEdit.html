@@ -18,7 +18,7 @@
 	<link rel="stylesheet" href="/css/skin_color.css">
 
 </head>
-<body class="hold-transition light-skin sidebar-mini theme-primary fixed">
+<body class="hold-transition light-skin sidebar-mini theme-primary fixed" >
 	
 <div class="wrapper" style="height: auto; min-height: 100%;">
 
@@ -63,16 +63,22 @@
 			<div class="box-body">
 			  <div class="row">
 				<div class="col">
-					<form  action="/order/orderadd">
+					<form  action="">
 					  <div class="row">
 					  <input name=orderType type="hidden" value="1">
 					  
-						<div class="col-12">						
+					  <div class="form-group" >
+								<h5>订单号<span class="text-danger"></span></h5>
+								<div class="controls">
+									<input type="text" id="orderCode" name="orderCode" disabled="disabled" class="form-control" th:value="${order.orderCode}"> 
+								</div>
+						</div>
+					  
 						<div class="form-group">
 								<h5>产品名称<span class="text-danger">*</span></h5>
 								<div class="controls">
 									<select name="productCode" id="productCode"  class="form-select" onchange="getProductPrice()">
-										<option  th:each="productInfo : ${productList}" th:value="${productInfo.productCode}"  th:text="${productInfo.productName}+'('+${productInfo.remark}+')'"></option>
+										<option  th:each="productInfo : ${productList}" th:selected="${order.productCode eq productInfo.productCode}" th:value="${productInfo.productCode}"  th:text="${productInfo.productName}+'('+${productInfo.remark}+')'"></option>
 									</select>
 								</div>
 							</div>
@@ -80,10 +86,10 @@
 						<div class="form-group">
 						<h5>重量 <span class="text-danger"></span></h5>
 						<div class="demo-radio-button" style="padding-top:5px">
-						<input name="weight" type="radio" id="radio_1"  value="50" checked="" onchange="getProductPrice()">
-						<label for="radio_1" style="margin-bottom:0px;min-width: 150px">大桶（50KG）</label>
-						<input name="weight" type="radio" id="radio_2" value="20" onchange="getProductPrice()">
-						<label for="radio_2" style="margin-bottom:0px;min-width: 70px">小桶(20KG)</label>
+						<input name="weight" type="radio" id="radio_1"  value="50" th:checked="${order.weight eq 50}" onchange="getProductPrice()">
+						<label for="radio_1" class="radio1" style="margin-bottom:0px;min-width: 150px">大桶（50KG）</label>
+						<input name="weight" type="radio" id="radio_2" value="20" th:checked="${order.weight eq 20}" onchange="getProductPrice()">
+						<label for="radio_2" class="radio1" style="margin-bottom:0px;min-width: 70px">小桶(20KG)</label>
 						</div>
 						</div>
 				
@@ -91,22 +97,22 @@
 						<div class="form-group">
 								<h5>产品单价（吨） <span class="text-danger">*</span></h5>
 								<div class="controls">
-									<input type="text" id="unitprice" name="unitprice" class="form-control" value="" required data-validation-required-message="必填字段"> 
+									<input type="text" id="unitprice" name="unitprice" class="form-control" th:value="${order.unitprice}" required data-validation-required-message="必填字段"> 
 								</div>
 						</div>
 						<div class="form-group">
 								<h5>数量（桶） <span class="text-danger">*</span></h5>
 								<div class="controls">
-									<input type="number" name="quantity" class="form-control" value=""  required  data-validation-required-message="This field is required" min="1"> 
+									<input type="number" name="quantity" class="form-control" th:value="${order.quantity}"  required  data-validation-required-message="This field is required" min="1"> 
 								</div>
 						</div>
 						
 
 				
 					 			<div class="form-group">
-									<label class="col-form-label col-md-2">Date</label>
+									<label class="col-form-label col-md-2">订货日期</label>
 									<div class="col-md-10">
-									<input class="form-control" type="date" name="orderDate" value="">
+									<input class="form-control" type="date" name="orderDate" th:value="${#dates.format(order.orderDate,'yyyy-MM-dd')}">
 									</div>
 								</div>
 					
@@ -114,26 +120,20 @@
 							<div class="form-group">
 								<h5>装车费<span class="text-danger"></span></h5>
 								<div class="controls">
-									<input type="number" name="orderFreight" class="form-control" value="" > 
+									<input type="number" name="orderFreight" class="form-control" th:value="${order.orderFreight}" > 
 								</div>
 						</div>
 				
-						</div>
-							
-							
-							
-							
-				
-							
 							
 						</div>
 					  </div>
 						
 						
 						
-						<div class="text-xs-right">
-							<button type="submit" class="btn btn-info">提交</button>
-							<button type="button" class="btn btn-info">取消</button>
+						<div class="text-xs-right" style="text-align: center">
+							<button type="button" onclick="submitForm()" class="btn btn-primary">提交</button>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button type="button" class="btn btn-default">取消</button>
 						</div>
 					</form>
 
@@ -141,7 +141,6 @@
 				<!-- /.col -->
 			  </div>
 			  <!-- /.row -->
-			</div>
 			<!-- /.box-body -->
 		  </div>
 		  <!-- /.box -->
@@ -200,10 +199,41 @@
 	<script src="/assets/vendor_plugins/timepicker/bootstrap-timepicker.min.js"></script>
 	
 	<script type="text/javascript">
-	
-	$(function(){
-		getProductPrice();
-	});
+	var fd =new FormData();
+$(".form-control").change(function(){
+	var ft=$(this);
+	fd.append(ft.attr("name"),ft.val());
+	alert(fd.get(ft.attr("name")));
+});
+
+$("#orderCode").change(function(){
+	var ft=$(this);
+	fd.append(ft.attr("name"),ft.val());
+	alert(fd.get(ft.attr("name")));
+});
+
+$(".radio1").click(function(){
+	var ft=$(this);
+	fd.append(ft.attr("name"),ft.val());
+	alert(fd.get(ft.attr("name")));
+});
+
+	function submitForm(){
+		fd.append("orderCode",$("#orderCode").val());
+		
+		$.ajax({
+			url:"http://localhost:8080/order/orderedit",
+			data:{"orderCode":"100"},
+			//contentType:false,
+			//processData:false,
+			success: function (result){
+				alert("success");
+			},
+			error: function(){
+				console.log("Send Request Fail..")
+			}
+		})
+	}
 	
 	function getProductPrice(){
 		var pc=$("#productCode").val();

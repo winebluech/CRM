@@ -12,4 +12,6 @@ import com.crm.model.ProductInfo;
 
 	List<ProductInfo> queryAllProductInfo();
 	
+	void add(ProductInfo productInfo);
+	
 	}

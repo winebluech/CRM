@@ -1,6 +1,5 @@
 package com.crm.model;
 
-import java.util.Date;
 
 public class ProductInfo {
 
@@ -10,7 +9,7 @@ public class ProductInfo {
 	private String contactPersion;
 	private String phone;
 	private String address;
-	private String is_delete;
+	private Integer is_delete;
 	private String remark;
 	public String getId() {
 		return id;
@@ -48,10 +47,10 @@ public class ProductInfo {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getIs_delete() {
+	public Integer getIs_delete() {
 		return is_delete;
 	}
-	public void setIs_delete(String is_delete) {
+	public void setIs_delete(Integer is_delete) {
 		this.is_delete = is_delete;
 	}
 	public String getRemark() {

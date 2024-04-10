@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.ibatis.javassist.expr.NewArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.crm.dao.OrderDao;
 import com.crm.dao.ProductInfoDao;
@@ -15,6 +16,7 @@ import com.crm.model.Order;
 import com.crm.model.OrderProduct;
 import com.crm.model.ProductInfo;
 import com.crm.service.OrderService;
+import com.crm.unit.SnowFlake;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -54,4 +56,48 @@ public class OrderServiceImpl implements OrderService {
 		
 		return productInfoList;
 	}
+	
+	@Transactional
+	public void addOrder(Order order) {
+		order.setOrderCode(SnowFlake.getOrderNum());
+		order.setOrderStatus("0");
+		order.setIs_delete(0);
+		if(order.getOrderDate()==null) {
+			order.setOrderDate(new Date());
+		}
+		orderDao.addOrder(order);
+		orderDao.addOrderProduct(order);
+	}
+
+	@Override
+	public Double getProductPrice(String productCode, String weight) {
+		Order order=orderDao.getProductPriceForProductCodeAndWeight(productCode,weight);
+		if(order==null) {
+			return null;
+		}else if(order.getUnitprice()!=null){
+			
+			Double d1=Double.parseDouble(order.getUnitprice().toString());
+			return d1;
+		}else {
+			return null;
+		}
+		
+		
+	}
+
+	@Override
+	public Order queryOrderByOrderCode(String orderCode) {
+		Order order=orderDao.queryOrderByOrderCode(orderCode);
+		return order;
+	}
+
+	@Override
+	@Transactional
+	public void editOrderByOrderCode(Order order) {
+		
+		orderDao.updateOrderByOrderCode(order);
+		orderDao.updateOrderProductByOrderCode(order);
+	}
+	
+
 }

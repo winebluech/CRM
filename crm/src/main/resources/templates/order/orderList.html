@@ -91,17 +91,17 @@
                       			<td th:text="${order.quantity}+'桶'">8</td>
                      			<td th:text="${order.weight}+'kg'">8</td>
                       			<td th:text="${order.totalPrice}">200</td>
-                      			<td th:text="${order.totalPrice}">200</td>
+                      			<td th:text="${order.profit}">200</td>
                       			<td th:text="${#dates.format(order.orderDate,'yyyy-MM-dd')}">200</td>
 								<td>
 								<span class="badge badge-pill badge-warning" th:if="${order.orderStatus == '0'}">出库</span>
 								<span class="badge badge-pill badge-warning" th:if="${order.orderStatus == '1'}">完成</span>
 								<span class="badge badge-pill badge-warning" th:if="${order.orderStatus == '-1'}">退货</span>
 								</td>
-									<td><a href="javascript:void(0)" class="text-info me-10" data-bs-toggle="tooltip" data-bs-original-title="Edit">
+									<td><a th:href="'/order/ordereditpage?orderCode='+ ${order.orderCode}" class="text-info me-10" data-bs-toggle="tooltip" data-bs-original-title="Ediwt">
 											<i class="ti-marker-alt"></i>
 										</a> 
-										<a href="javascript:void(0)" class="text-danger" data-bs-original-title="Delete" data-bs-toggle="tooltip">
+										<a th:href="'/order/orderdelete?orderCode='+ ${order.orderCode}" class="text-danger" data-bs-original-title="Delete" data-bs-toggle="tooltip">
 											<i class="ti-trash"></i>
 										</a>
 									</td>
