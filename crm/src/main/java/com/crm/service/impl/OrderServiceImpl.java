@@ -94,9 +94,19 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	@Transactional
 	public void editOrderByOrderCode(Order order) {
+		if(order.getOrderDate()!=null) {
+			orderDao.updateOrderByOrderCode(order);
+		}
+		if(order.getProductCode()!=null || order.getQuantity()!=null || order.getWeight()!=null || order.getUnitprice()!=null) {
+			orderDao.updateOrderProductByOrderCode(order);
+		}
 		
-		orderDao.updateOrderByOrderCode(order);
-		orderDao.updateOrderProductByOrderCode(order);
+	}
+	@Transactional
+	public void deleteOrderAndOrderProductByOrderCode(String orderCode) {
+		
+		orderDao.deleteOrderByOrderCode(orderCode);
+		orderDao.deleteOrderProductByOrderCode(orderCode);
 	}
 	
 

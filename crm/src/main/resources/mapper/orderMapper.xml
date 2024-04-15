@@ -58,16 +58,43 @@
     </delete>
     
     <!-- 修改数据 -->
-    <update id="updateOrderById" parameterType="com.crm.model.Order">
+    <update id="updateOrderByOrderCode" parameterType="com.crm.model.Order">
        update `order`
        	<set>
-       		<if test="orderDate != null"> orderdate = #{orderDate}</if>
-       		<if test="orderType != null"> ordertype = #{orderType}</if>
-       		<if test="remark != null"> remark = #{remark}</if>
-       		<if test="orderAddress != null"> orderaddress = #{orderAddress}</if>
-       		<if test="orderStatus != null"> orderstatus = #{orderStatus}</if>
-       		<if test="is_delete != null"> is_delete = #{is_delete}</if>
-       		<if test="settlement != null"> settlement = #{settlement}</if>
+       		<if test="orderDate != null"> orderdate = #{orderDate} ,</if>
+       		<if test="orderType != null"> ordertype = #{orderType} ,</if>
+       		<if test="remark != null"> remark = #{remark} ,</if>
+       		<if test="orderAddress != null"> orderaddress = #{orderAddress} ,</if>
+       		<if test="orderStatus != null"> orderstatus = #{orderStatus} ,</if>
+       		<if test="is_delete != null"> is_delete = #{is_delete} ,</if>
+       		<if test="settlement != null"> settlement = #{settlement} ,</if>
+       	</set>
+       where ordercode=#{orderCode}
+    </update>
+    
+     <update id="updateOrderProductByOrderCode" parameterType="com.crm.model.Order">
+       update order_product
+       	<set>
+       		<if test="productCode != null"> productcode = #{productCode} ,</if>
+       		<if test="quantity != null"> quantity = #{quantity} ,</if>
+       		<if test="weight != null"> weight = #{weight} ,</if>
+       		<if test="unitprice != null"> unitprice = #{unitprice} ,</if>
+       	</set>
+       where ordercode=#{orderCode}
+    </update>
+    
+     <update id="deleteOrderProductByOrderCode" parameterType="String">
+       update order_product
+       	<set>
+       		 is_delete = 1
+       	</set>
+       where ordercode=#{orderCode}
+    </update>
+    
+         <update id="deleteOrderByOrderCode" parameterType="String">
+       update `order`
+       	<set>
+       		 is_delete = 1
        	</set>
        where ordercode=#{orderCode}
     </update>

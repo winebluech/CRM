@@ -50,4 +50,6 @@ public interface OrderService {
 	 * @param order
 	 */
 	public void editOrderByOrderCode(Order order);
+	
+	public void deleteOrderAndOrderProductByOrderCode(String orderCode);
 }

@@ -42,7 +42,7 @@
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
 								<li class="breadcrumb-item" aria-current="page">首页</li>
-								<li class="breadcrumb-item active" aria-current="page">出库订单</li>
+								<li class="breadcrumb-item active" aria-current="page">白乳胶进出库</li>
 							</ol>
 						</nav>
 					</div>
@@ -54,10 +54,19 @@
 		<!-- Main content -->
 		<section class="content">
 
-		 <!-- Basic Forms -->
-		  <div class="box">
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#orderout" role="tab"><span class=""><i class="ion-home"></i></span> <span class="">白乳胶出库</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#orderin" role="tab"><span class=""><i class="ion-person"></i></span> <span class="">白乳胶进库</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#orderjiesuan" role="tab"><span class=""><i class="ion-person"></i></span> <span class="">白乳胶结算</span></a> </li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content tabcontent-border">
+						<!-- ******************白乳胶出库订单 *******************-->
+						<div class="tab-pane active" id="orderout" role="tabpanel">
+							<div class="box">
 			<div class="box-header with-border">
-			  <h4 class="box-title">出库订单</h4>
+		
+			  <h4 class="box-title">白乳胶出库</h4>
 			</div>
 			<!-- /.box-header -->
 			<div class="box-body">
@@ -120,20 +129,12 @@
 				
 						</div>
 							
-							
-							
-							
-				
-							
-							
 						</div>
 					  </div>
 						
-						
-						
 						<div class="text-xs-right">
 							<button type="submit" class="btn btn-info">提交</button>
-							<button type="button" class="btn btn-info">取消</button>
+							<button type="button" onclick="goBack()" class="btn btn-info">取消</button>
 						</div>
 					</form>
 
@@ -142,6 +143,168 @@
 			  </div>
 			  <!-- /.row -->
 			</div>
+						</div>
+						
+							<!-- ******************白乳胶进库 *******************-->
+						<div class="tab-pane" id="orderin" role="tabpanel">
+							<div class="box">
+			<div class="box-header with-border">
+		
+			  <h4 class="box-title">白乳胶进库</h4>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+			  <div class="row">
+				<div class="col">
+					<form  action="">
+					  <div class="row">
+					  <input name=orderType type="hidden" value="1">
+					  
+						<div class="col-12">						
+							
+							
+							<div class="form-group">
+								<h5>产品名称<span class="text-danger">*</span></h5>
+								<div class="controls">
+									<select name="productCode" id="productCode"  class="form-select" onchange="getProductPrice()">
+										<option  th:each="productInfo : ${productList}" th:value="${productInfo.productCode}"  th:text="${productInfo.productName}+'('+${productInfo.remark}+')'"></option>
+									</select>
+								</div>
+							</div>
+				
+								<div class="form-group">
+						<h5>重量 <span class="text-danger"></span></h5>
+						<div class="demo-radio-button" style="padding-top:5px">
+						<input name="weight" type="radio" id="radio_1"  value="50" checked="" onchange="getProductPrice()">
+						<label for="radio_1" style="margin-bottom:0px;min-width: 150px">大桶（50KG）</label>
+						<input name="weight" type="radio" id="radio_2" value="20" onchange="getProductPrice()">
+						<label for="radio_2" style="margin-bottom:0px;min-width: 70px">小桶(20KG)</label>
+						</div>
+						</div>
+				
+				
+						<div class="form-group">
+								<h5>产品单价（吨） <span class="text-danger">*</span></h5>
+								<div class="controls">
+									<input type="text" id="unitprice" name="unitprice" class="form-control" value="" required data-validation-required-message="必填字段"> 
+								</div>
+						</div>
+						<div class="form-group">
+								<h5>数量（桶） <span class="text-danger">*</span></h5>
+								<div class="controls">
+									<input type="number" name="quantity" class="form-control" value=""  required  data-validation-required-message="This field is required" min="1"> 
+								</div>
+						</div>
+						
+
+				
+					 			<div class="form-group">
+									<label class="col-form-label col-md-2">Date</label>
+									<div class="col-md-10">
+									<input class="form-control" type="date" name="orderDate" value="">
+									</div>
+								</div>
+					
+					
+							<div class="form-group">
+								<h5>备注<span class="text-danger"></span></h5>
+								<div class="controls">
+									<input type="text" name="" class="form-control" value="" > 
+								</div>
+						</div>
+				
+						</div>
+							
+						</div>
+					  </div>
+						
+						<div class="text-xs-right">
+							<button type="submit" class="btn btn-info">提交</button>
+							<button type="button" onclick="goBack()" class="btn btn-info">取消</button>
+						</div>
+					</form>
+
+				</div>
+				<!-- /.col -->
+			  </div>
+			  <!-- /.row -->
+			</div>
+							
+							
+						</div>
+						
+						
+							<!-- ******************白乳胶结算 *******************-->
+						
+						<div class="tab-pane" id="orderjiesuan" role="tabpanel">
+							<div class="box">
+			<div class="box-header with-border">
+		
+			  <h4 class="box-title">白乳胶结算</h4>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+			  <div class="row">
+				<div class="col">
+					<form  action="">
+					  <div class="row">
+					  <input name=orderType type="hidden" value="1">
+					  
+						<div class="col-12">						
+							
+							
+
+				
+							<div class="form-group">
+								<h5>结算金额<span class="text-danger"></span></h5>
+								<div class="controls">
+									<input type="number" name="" class="form-control" value="" > 
+								</div>
+							</div>
+						
+						
+
+				
+					 			<div class="form-group">
+									<label class="col-form-label col-md-2">结算日期</label>
+									<div class="col-md-10">
+									<input class="form-control" type="date" name="orderDate" value="">
+									</div>
+								</div>
+					
+					
+							<div class="form-group">
+								<h5>备注<span class="text-danger"></span></h5>
+								<div class="controls">
+									<input type="text" name="" class="form-control" value="" > 
+								</div>
+						</div>
+				
+						</div>
+							
+						</div>
+					  </div>
+						
+						<div class="text-xs-right">
+							<button type="submit" class="btn btn-info">提交</button>
+							<button type="button" onclick="goBack()" class="btn btn-info">取消</button>
+						</div>
+					</form>
+
+				</div>
+				<!-- /.col -->
+			  </div>
+			  <!-- /.row -->
+			</div>
+							
+							
+						</div>
+
+					</div>
+
+
+		 <!-- Basic Forms -->
+		  
 			<!-- /.box-body -->
 		  </div>
 		  <!-- /.box -->
@@ -222,7 +385,10 @@
 		})
 	}
 	
-	
+	function goBack(){
+		window.location.href="http://localhost:8080/order/orderoutlist"; 
+		
+	}
 	</script>
 </body>
 </html>

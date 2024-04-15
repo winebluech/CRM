@@ -133,7 +133,7 @@
 						<div class="text-xs-right" style="text-align: center">
 							<button type="button" onclick="submitForm()" class="btn btn-primary">提交</button>
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="button" class="btn btn-default">取消</button>
+							<button type="button" onclick="goBack()" class="btn btn-default">取消</button>
 						</div>
 					</form>
 
@@ -199,41 +199,42 @@
 	<script src="/assets/vendor_plugins/timepicker/bootstrap-timepicker.min.js"></script>
 	
 	<script type="text/javascript">
-	var fd =new FormData();
+	var fdd={};
 $(".form-control").change(function(){
 	var ft=$(this);
-	fd.append(ft.attr("name"),ft.val());
-	alert(fd.get(ft.attr("name")));
+	fdd[ft.attr("name")]=ft.val()
 });
 
-$("#orderCode").change(function(){
+$("#productCode").change(function(){
 	var ft=$(this);
-	fd.append(ft.attr("name"),ft.val());
-	alert(fd.get(ft.attr("name")));
+	fdd[ft.attr("name")]=ft.val()
 });
 
 $(".radio1").click(function(){
 	var ft=$(this);
-	fd.append(ft.attr("name"),ft.val());
-	alert(fd.get(ft.attr("name")));
+	fdd[ft.prev().attr("name")]=ft.prev().val()
 });
 
 	function submitForm(){
-		fd.append("orderCode",$("#orderCode").val());
 		
-		$.ajax({
-			url:"http://localhost:8080/order/orderedit",
-			data:{"orderCode":"100"},
-			//contentType:false,
-			//processData:false,
-			success: function (result){
-				alert("success");
-			},
-			error: function(){
-				console.log("Send Request Fail..")
-			}
-		})
-	}
+		
+		
+		fdd["orderCode"]=$("#orderCode").val();
+		
+			$.ajax({
+				url:"http://localhost:8080/order/orderedit",
+				data:fdd,
+				//contentType:false,
+				//processData:false,
+				success: function (result){
+					window.location.href="http://localhost:8080/order/orderoutlist";
+				},
+				error: function(){
+					alert("修改失败");
+				}
+			})
+		}
+		
 	
 	function getProductPrice(){
 		var pc=$("#productCode").val();
@@ -251,7 +252,10 @@ $(".radio1").click(function(){
 			}
 		})
 	}
-	
+	function goBack(){
+		window.location.href="http://localhost:8080/order/orderoutlist"; 
+		
+	}
 	
 	</script>
 </body>

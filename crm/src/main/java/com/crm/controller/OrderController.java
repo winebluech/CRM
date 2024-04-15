@@ -26,7 +26,7 @@ public class OrderController {
 	@Autowired
 	private OrderService orderservice;
 	
-	@RequestMapping("/orderOutList")
+	@RequestMapping("/orderoutlist")
 	public String orderOutList(Model model) {
 		List<Order> orderList=orderservice.QueryAllOutOrders();
 		
@@ -59,20 +59,33 @@ public class OrderController {
 		
 		if(order.getOrderType()==1) {
 			orderservice.addOrder(order);
-			return "redirect:/order/orderOutList";
+			return "redirect:/order/orderoutlist";
 		}else if (order.getOrderType()==2) {
-			return "redirect:/order/orderOutList";
+			return "redirect:/order/orderoutlist";
 		}else {
-			return "redirect:/order/orderOutList";
+			return "redirect:/order/orderoutlist";
+		}
+		
+	}
+	
+	@RequestMapping("/orderdelete")
+	public String orderdelete(String orderCode,int orderType) {
+		
+		if(orderType==1) {
+			orderservice.deleteOrderAndOrderProductByOrderCode(orderCode);
+			return "redirect:/order/orderoutlist";
+		}else if (orderType==2) {
+			return "redirect:/order/orderoutlist";
+		}else {
+			return "redirect:/order/orderoutlist";
 		}
 		
 	}
 	
 	@GetMapping("/orderedit")
 	@ResponseBody
-	public String orderedit( String orderCode) {
-		//System.out.println(order.getOrderCode()+"---"+order.getProductCode()+"--"+order.getWeight());
-		System.out.println(orderCode);
+	public String orderedit( Order order) {
+		orderservice.editOrderByOrderCode(order);
 		return "200";
 		
 	}

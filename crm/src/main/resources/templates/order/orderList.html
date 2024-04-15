@@ -101,7 +101,7 @@
 									<td><a th:href="'/order/ordereditpage?orderCode='+ ${order.orderCode}" class="text-info me-10" data-bs-toggle="tooltip" data-bs-original-title="Ediwt">
 											<i class="ti-marker-alt"></i>
 										</a> 
-										<a th:href="'/order/orderdelete?orderCode='+ ${order.orderCode}" class="text-danger" data-bs-original-title="Delete" data-bs-toggle="tooltip">
+										<a th:href="'/order/orderdelete?orderCode='+ ${order.orderCode}+'&orderType=1'" class="text-danger" data-bs-original-title="Delete" data-bs-toggle="tooltip">
 											<i class="ti-trash"></i>
 										</a>
 									</td>

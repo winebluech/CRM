@@ -23,4 +23,8 @@ import com.crm.model.Order;
 
 	void updateOrderProductByOrderCode(Order order);
 	
+	void deleteOrderProductByOrderCode(String orderCode);
+	
+	void deleteOrderByOrderCode(String orderCode);
+	
 	}
