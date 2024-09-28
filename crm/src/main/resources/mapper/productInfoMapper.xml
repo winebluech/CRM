@@ -18,7 +18,13 @@
 	
     <!-- 添加数据 -->
     <insert id="add" parameterType="com.crm.model.ProductInfo">
-        insert into t_user(name,age) value(#{name},#{age})
+    	<selectKey keyProperty="id" order="AFTER" resultType="int">
+    		select LAST_INSERT_ID()
+    	</selectKey>
+        insert into  productinfo
+        (productcode,productname,contactpersion,phone,address,is_delete) 
+        value
+        (#{id},#{productCode},#{productName},#{contactPersion},#{phone},#{address},#{is_delete})
     </insert>
     
     <!-- 删除数据 -->

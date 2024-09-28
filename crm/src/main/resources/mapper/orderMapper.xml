@@ -11,12 +11,16 @@
 		<result column="orderdate" property="orderDate"/>
 		<result column="ordercode" property="orderCode"/>
 		<result column="orderstatus" property="orderStatus"/>
+		<result column="orderaddress" property="orderAddress"/>
+		<result column="settlement" property="settlement"/>
 		
 		<result column="productcode" property="productCode"/> 
 		<result column="quantity" property="quantity"/> 
 		<result column="weight" property="weight"/> 
 		<result column="unitprice" property="unitprice"/> 
 		<result column="productname" property="productName"/> 
+		
+		<result column="is_delete" property="is_delete"/> 
 	</resultMap>
 	<resultMap id="orderSupplementResult" type="com.crm.model.Order" extends="baseResult">
 		<result column="orderfreight" property="orderFreight"/> 
@@ -28,8 +32,24 @@
 	</resultMap>
 	
     <!-- 添加数据 -->
-    <insert id="add" parameterType="com.crm.model.Order">
-        insert into t_user(name,age) value(#{name},#{age})
+    <insert id="addOrder" parameterType="com.crm.model.Order" useGeneratedKeys="true" keyProperty="id">
+       INSERT INTO `order` 
+	   (id,ordercode,ordertype,orderdate,orderaddress,orderstatus,is_delete,settlement,remark) 
+	   VALUES
+	   (
+	   #{id},#{orderCode},#{orderType},#{orderDate},#{orderAddress},#{orderStatus},#{is_delete},
+	   #{settlement},#{remark}
+	   )
+    </insert>
+    
+      <insert id="addOrderProduct" parameterType="com.crm.model.Order"  useGeneratedKeys="true" keyProperty="id">
+    
+       INSERT INTO order_product
+	   (id,ordercode,productcode,quantity,weight,unitprice,is_delete) 
+	   VALUES
+	   (
+	   #{id},#{orderCode},#{productCode},#{quantity},#{weight},#{unitprice},#{is_delete}
+	   )
     </insert>
     
     <!-- 删除数据 -->
@@ -38,8 +58,45 @@
     </delete>
     
     <!-- 修改数据 -->
-    <update id="update" parameterType="com.crm.model.Order">
-        update t_user set name=#{name},age=#{age} where id=#{id}
+    <update id="updateOrderByOrderCode" parameterType="com.crm.model.Order">
+       update `order`
+       	<set>
+       		<if test="orderDate != null"> orderdate = #{orderDate} ,</if>
+       		<if test="orderType != null"> ordertype = #{orderType} ,</if>
+       		<if test="remark != null"> remark = #{remark} ,</if>
+       		<if test="orderAddress != null"> orderaddress = #{orderAddress} ,</if>
+       		<if test="orderStatus != null"> orderstatus = #{orderStatus} ,</if>
+       		<if test="is_delete != null"> is_delete = #{is_delete} ,</if>
+       		<if test="settlement != null"> settlement = #{settlement} ,</if>
+       	</set>
+       where ordercode=#{orderCode}
+    </update>
+    
+     <update id="updateOrderProductByOrderCode" parameterType="com.crm.model.Order">
+       update order_product
+       	<set>
+       		<if test="productCode != null"> productcode = #{productCode} ,</if>
+       		<if test="quantity != null"> quantity = #{quantity} ,</if>
+       		<if test="weight != null"> weight = #{weight} ,</if>
+       		<if test="unitprice != null"> unitprice = #{unitprice} ,</if>
+       	</set>
+       where ordercode=#{orderCode}
+    </update>
+    
+     <update id="deleteOrderProductByOrderCode" parameterType="String">
+       update order_product
+       	<set>
+       		 is_delete = 1
+       	</set>
+       where ordercode=#{orderCode}
+    </update>
+    
+         <update id="deleteOrderByOrderCode" parameterType="String">
+       update `order`
+       	<set>
+       		 is_delete = 1
+       	</set>
+       where ordercode=#{orderCode}
     </update>
     
     <!--根据id查询得到一个user对象-->
@@ -52,11 +109,29 @@
       T1.ordercode,t1.orderdate,t1.orderstatus,t2.productcode,t2.quantity,t2.unitprice,
       t2.weight,t3.productname as productname ,t3.remark as productname2 
       FROM `order` T1 , order_product T2 ,productinfo T3 
-      WHERE T1.ordercode=T2.ordercode AND T2.productcode=T3.producecode 
+      WHERE T1.ordercode=T2.ordercode AND T2.productcode=T3.productcode 
       and t1.is_delete=0 and t2.is_delete=0 and t3.is_delete=0 and  t1.ordertype=#{orderType}
     
     </select>
     
     
+        <select id="queryOrderByOrderCode" parameterType="String" resultMap="baseResult">
+      SELECT 
+      T1.ordercode,t1.orderdate,t1.orderstatus,t2.productcode,t2.quantity,t2.unitprice,
+      t2.weight,t3.productname as productname ,t3.remark as productname2 
+      FROM `order` T1 , order_product T2 ,productinfo T3 
+      WHERE T1.ordercode=T2.ordercode AND T2.productcode=T3.productcode 
+      and t1.is_delete=0 and t2.is_delete=0 and t3.is_delete=0 and  t1.ordercode=#{orderCode}
+    
+    </select>
+    
+       <select id="getProductPriceForProductCodeAndWeight" resultMap="baseResult">
+    
+        
+         SELECT t1.*,t2.unitprice FROM `order` t1 ,order_product t2  
+         where t1.is_delete=0 and t2.is_delete=0 and t1.ordercode=t2.ordercode 
+         and t2.productcode=#{productCode} and t2.weight=#{weight}
+         order by t1.orderdate desc limit 0,1
+    </select> 
     
 </mapper>

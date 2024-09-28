@@ -20,7 +20,7 @@
 </head>
 <body class="hold-transition light-skin sidebar-mini theme-primary fixed">
 	
-<div class="wrapper">
+<div class="wrapper" style="height: auto; min-height: 100%;">
 
   
   
@@ -42,7 +42,7 @@
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#"><i class="mdi mdi-home-outline"></i></a></li>
 								<li class="breadcrumb-item" aria-current="page">首页</li>
-								<li class="breadcrumb-item active" aria-current="page">出库订单</li>
+								<li class="breadcrumb-item active" aria-current="page">白乳胶进出库</li>
 							</ol>
 						</nav>
 					</div>
@@ -54,279 +54,300 @@
 		<!-- Main content -->
 		<section class="content">
 
-		 <!-- Basic Forms -->
-		  <div class="box">
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#orderout" role="tab"><span class=""><i class="ion-home"></i></span> <span class="">白乳胶出库</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#orderin" role="tab"><span class=""><i class="ion-person"></i></span> <span class="">白乳胶进库</span></a> </li>
+						<li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#orderjiesuan" role="tab"><span class=""><i class="ion-person"></i></span> <span class="">白乳胶结算</span></a> </li>
+					</ul>
+					<!-- Tab panes -->
+					<div class="tab-content tabcontent-border">
+						<!-- ******************白乳胶出库订单 *******************-->
+						<div class="tab-pane active" id="orderout" role="tabpanel">
+							<div class="box">
 			<div class="box-header with-border">
-			  <h4 class="box-title">出库订单</h4>
+		
+			  <h4 class="box-title">白乳胶出库</h4>
 			</div>
 			<!-- /.box-header -->
 			<div class="box-body">
 			  <div class="row">
 				<div class="col">
-					<form novalidate>
+					<form  action="/order/orderadd">
 					  <div class="row">
+					  <input name=orderType type="hidden" value="1">
+					  
 						<div class="col-12">						
 						<div class="form-group">
 								<h5>产品名称<span class="text-danger">*</span></h5>
 								<div class="controls">
-									<select name="select" id="select" required class="form-select">
+									<select name="productCode" id="productCodeOut"  class="form-select" onchange="getProductOutPrice()">
 										<option  th:each="productInfo : ${productList}" th:value="${productInfo.productCode}"  th:text="${productInfo.productName}+'('+${productInfo.remark}+')'"></option>
 									</select>
 								</div>
 							</div>
 							
 						<div class="form-group">
-						<h5>重量 <span class="text-danger">*</span></h5>
+						<h5>重量 <span class="text-danger"></span></h5>
 						<div class="demo-radio-button" style="padding-top:5px">
-						<input name="group1" type="radio" id="radio_1"  value="50" checked="">
+						<input name="weightOut" type="radio" id="radio_1"  value="50" checked="" onchange="getProductOutPrice()">
 						<label for="radio_1" style="margin-bottom:0px;min-width: 150px">大桶（50KG）</label>
-						<input name="group1" type="radio" id="radio_2" value="20">
+						<input name="weightOut" type="radio" id="radio_2" value="20" onchange="getProductOutPrice()">
 						<label for="radio_2" style="margin-bottom:0px;min-width: 70px">小桶(20KG)</label>
 						</div>
 						</div>
 				
 				
 						<div class="form-group">
-								<h5>产品价格 <span class="text-danger">*</span></h5>
+								<h5>产品单价（吨） <span class="text-danger">*</span></h5>
 								<div class="controls">
-									<input type="text" name="text" class="form-control" required data-validation-required-message="必填字段"> 
+									<input type="text" id="unitpriceOut" name="unitprice" class="form-control" value="" required data-validation-required-message="必填字段"> 
 								</div>
 						</div>
 						<div class="form-group">
 								<h5>数量（桶） <span class="text-danger">*</span></h5>
 								<div class="controls">
-									<input type="number" name="text" class="form-control"  required  data-validation-required-message="This field is required" min="1"> 
+									<input type="number" name="quantity" class="form-control" value=""  required  data-validation-required-message="This field is required" min="1"> 
 								</div>
 						</div>
 						
-					 <div class="form-group">
-								<label class="form-label">Date:</label>
-								<div class="input-group date">
-								<div class="input-group-addon">
-								<i class="fa fa-calendar"></i>
-					 			</div>
-					 			<input type="text" class="form-control pull-right" id="datepicker">
-								</div>
-				 	 </div>
-				
-					 <div class="form-group">
-							<label class="col-form-label col-md-2">Date</label>
-							<div class="col-md-10">
-							<input class="form-control" type="date" name="date">
-						</div>
-					</div>
-				
-						</div>
-							
-							
-							
-							
-							<div class="form-group">
-								<h5>Minimum Character Length <span class="text-danger">*</span></h5>
-								<div class="controls">
-									<input type="text" name="minChar" class="form-control" required data-validation-required-message="This field is required" minlength="6">
-								</div>
-								<div class="form-control-feedback"><small>Add <code>minlength="6"</code> attribute for minimum number of characters to accept.</small></div>
-							</div>
-							<div class="form-group">
-								<h5>Only Numbers <span class="text-danger">*</span></h5>
-								<div class="input-group"> <span class="input-group-addon">$</span>
-									<input type="number" name="onlyNum" class="form-control" required data-validation-required-message="This field is required"> <span class="input-group-addon">.00</span> 
-								</div>
-							</div>
-							<div class="form-group">
-								<h5>Maximum Number <span class="text-danger">*</span></h5>
-								<input type="number" name="maxNum" class="form-control" required data-validation-required-message="This field is required" max="25">
-								<div class="form-control-feedback"> 
-									<small><i>Must be lower than 25</i></small> - <small>Add <code>max</code> attribute for maximum number to accept. Also use 	<code>data-validation-max-message</code> attribute for max failure message</small> 
-								</div>
-							</div>
-						</div>
-						<div class="col-12">
-							<div class="form-group">
-								<h5>Minimum Number <span class="text-danger">*</span></h5>
-								<div class="controls">
-									<input type="number" name="minNum" class="form-control" required data-validation-required-message="This field is required" min="10">
-								</div>
-								<div class="form-control-feedback">
-									<small><i>Must be higher than 10</i></small> - <small>Add <code>min</code> attribute for minimum number to accept. Also use <code>data-validation-min-message</code> attribute for min failure message</small>
-								</div>
-							</div>
-							<div class="form-group">
-								<h5>Text Input Range <span class="text-danger">*</span></h5>
-								<div class="controls">
-									<input type="text" name="text" class="form-control" required data-validation-required-message="This field is required" minlength="10" maxlength="20" placeholder="Enter number between 10 &amp; 20"> 
-								</div>
-							</div>
-							<div class="form-group">
-								<h5>Input with Button <span class="text-danger">*</span></h5>
-								<div class="controls">
-									<div class="input-group">
-										<input type="text" class="form-control" placeholder="Search" required> 
-										<button class="btn btn-info btn-sm" type="button">Go!</button> 
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<h5>No Characters, Only Numbers <span class="text-danger">*</span></h5>
-								<div class="controls">
-									<input type="text" name="noChar" class="form-control" required data-validation-containsnumber-regex="(\d)+" data-validation-containsnumber-message="No Characters Allowed, Only Numbers"> 
-								</div>
-							</div>
-							<div class="form-group">
-								<h5>Pattern <span class="text-danger">*</span> <small><i>Must start with 'a' and end with 'z'</i></small></h5>
-								<div class="controls">
-									<input type="text" name="pattern" pattern="a.*z" data-validation-pattern-message="Must start with 'a' and end with 'z'" class="form-control" required>
-									<div class="form-control-feedback">
-										<small>Add <code>pattern</code> attribute to set input pattern. Also use <code>data-validation-pattern-message</code> attribute for pattern failure message</small>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<h5>Enter URL <span class="text-danger">*</span></h5>
-								<div class="controls">
-									<input type="text" class="form-control" placeholder="Add URL" data-validation-regex-regex="((http[s]?|ftp[s]?):\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*" data-validation-regex-message="Only Valid URL's">
-									<div class="form-control-feedback">
-										<small>Add <code>data-validation-regex-regex</code> attribute for regular expression. Also use <code>data-validation-regex-message</code> attribute for regex failure message</small>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<h5>Enter Email Address <span class="text-danger">*</span></h5>
-								<div class="controls">
-									<input type="text" class="form-control" placeholder="Email Address" data-validation-regex-regex="([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})" data-validation-regex-message="Enter Valid Email"> 
-								</div>
-							</div>
-							<div class="form-group">
-								<h5>Enter Date <span class="text-danger">*</span></h5>
-								<div class="controls">
-									<input type="date" name="date" class="form-control" required data-validation-required-message="This field is required"> </div>
-								<div class="form-control-feedback">
-									<small>Add <code>required</code> attribute to field for required validation.</small>
-								</div>
 
-							</div>
+				
+					 			<div class="form-group">
+									<label class="col-form-label col-md-2">Date</label>
+									<div class="col-md-10">
+									<input class="form-control" type="date" name="orderDate" value="">
+									</div>
+								</div>
+					
+					
 							<div class="form-group">
-								<h5>Basic Select <span class="text-danger">*</span></h5>
+								<h5>装车费<span class="text-danger"></span></h5>
 								<div class="controls">
-									<select name="select" id="select" required class="form-select">
-										<option value="">Select Your City</option>
-										<option value="1">India</option>
-										<option value="2">USA</option>
-										<option value="3">UK</option>
-										<option value="4">Canada</option>
-										<option value="5">Dubai</option>
+									<input type="number" name="orderFreight" class="form-control" value="" > 
+								</div>
+						</div>
+				
+						</div>
+							
+						</div>
+					 
+						
+						<div class="text-xs-right">
+							<button type="submit" class="btn btn-info">提交</button>
+							<button type="button" onclick="goBack()" class="btn btn-info">取消</button>
+						</div>
+					</form>
+ </div>
+				</div>
+				<!-- /.col -->
+			  </div>
+			  <!-- /.row -->
+			</div>
+						</div>
+						
+							<!-- ******************白乳胶进库 *******************-->
+						<div class="tab-pane" id="orderin" role="tabpanel">
+							<div class="box">
+			<div class="box-header with-border">
+		
+			  <h4 class="box-title">白乳胶进库</h4>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+			
+			<form  action="/order/order/whiteLatexInStorage">
+			<h4 class="box-title text-primary mb-0"><i class="ti-user me-15"></i>添加商品</h4>
+			<hr class="my-15">
+			  <div class="row">
+				<div class="col">
+					<form  action="">
+					  <div class="row">
+					  
+						<div class="col-12" style="padding-bottom:30px">						
+							
+							
+							<div class="form-group" >
+								<h5>订单编号:</h5>
+								<div class="controls" >
+									<input type="text" id="orderCodeIn" name="orderCodeIn" class="form-control" disabled ="disabled " th:value="${newOrderCode}"  required data-validation-required-message="必填字段"> 
+								</div>
+							</div>
+							
+								<div class="form-group">
+									<label class="col-form-label col-md-3">订单日期：</label>
+									<div class="">
+									<input class="form-control" type="date" name="orderDate" value="">
+									</div>
+								</div>
+							
+								<div class="form-group">
+								<h5>产品名称<span class="text-danger">*</span></h5>
+								<div class="controls">
+									<select name="productCode" id="productCodeIn"  class="form-select" onchange="getProductInPrice()">
+										<option  th:each="productInfo : ${productList}" th:value="${productInfo.productCode}"  th:text="${productInfo.productName}+'('+${productInfo.remark}+')'"></option>
 									</select>
 								</div>
 							</div>
+							
 							<div class="form-group">
-								<h5>Textarea <span class="text-danger">*</span></h5>
+						<h5>重量 <span class="text-danger"></span></h5>
+						<div class="demo-radio-button" style="padding-top:5px">
+						<input name="weightIn" type="radio" id="radio_3"  value="50" checked="" onchange="getProductInPrice()">
+						<label for="radio_3" style="margin-bottom:0px;min-width: 150px">大桶（50KG）</label>
+						<input name="weightIn" type="radio" id="radio_4" value="20" onchange="getProductInPrice()">
+						<label for="radio_4" style="margin-bottom:0px;min-width: 70px">小桶(20KG)</label>
+						</div>
+						</div>
+						
+						<div class="form-group">
+								<h5>产品单价（吨） <span class="text-danger">*</span></h5>
 								<div class="controls">
-									<textarea name="textarea" id="textarea" class="form-control" required placeholder="Textarea text"></textarea>
+									<input type="text" id="unitpriceIn" name="unitpriceIn" class="form-control" value="" required data-validation-required-message="必填字段"> 
+								</div>
+						</div>
+						
+						<div class="form-group">
+								<h5>数量（桶） <span class="text-danger">*</span></h5>
+								<div class="controls">
+									<input type="number" name="quantity" class="form-control" value=""  required  data-validation-required-message="This field is required" min="1"> 
+								</div>
+						</div>
+						
+							<div class="text-xs-right">
+							<button type="button" class="btn btn-info" onclick="addOrderlist()">添加</button>
+						</div>
+						
+								</div>
+								
+				</div>
+					  </div>
+								
+			
+						
+						
+						
+		<div class="col-12 col-lg-12" id="orderList" style="display:none">
+		
+			<h4 class="box-title text-info mb-0"><i class="ti-user me-15"></i>订单信息</h4>
+			<hr class="my-15">
+			  <div class="box">
+				<div class="box-header with-border">
+				  <h4 class="box-title">Small table</h4>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+					  <table class="table table-sm mb-0">
+						  <tbody>
+							<tr>
+							  <th scope="col">商品名称</th>
+							  <th scope="col">单价</th>
+							  <th scope="col">重量</th>
+							  <th scope="col">数量</th>
+							</tr>
+						  </tbody>
+						  <tbody>
+							<tr id="tempTr" style="display:none">
+							  <td name="tempName">白乳胶</td>
+							  <td name="tempUnit">1800</td>
+							  <td name="tempWei">大桶</td>
+							  <td name="tempQuan">200桶</td>
+							</tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
+				
+											<div class="form-group">
+								<h5>备注<span class="text-danger"></span></h5>
+								<div class="controls">
+									<input type="text" name="" class="form-control" value="" > 
+								</div>
+						</div>
+					
+							
+					
+					
+						
+						<div class="text-xs-right">
+							<button type="submit" class="btn btn-info">提交</button>
+							<button type="button" onclick="goBack()" class="btn btn-info">取消</button>
+						</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->
+			</div>
+				
+					 		
+					
+					
+
+					</form>
+
+				</div>
+				<!-- /.col -->
+			  </div>
+			  <!-- /.row -->
+			</div>
+							
+							
+						</div>
+						
+						
+							<!-- ******************白乳胶结算 *******************-->
+						
+						<div class="tab-pane" id="orderjiesuan" role="tabpanel">
+							<div class="box">
+			<div class="box-header with-border">
+		
+			  <h4 class="box-title">白乳胶结算</h4>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body">
+			  <div class="row">
+				<div class="col">
+					<form  action="">
+					  <div class="row">
+					  <input name=orderType type="hidden" value="1">
+					  
+						<div class="col-12">						
+							
+							
+
+				
+							<div class="form-group">
+								<h5>结算金额<span class="text-danger"></span></h5>
+								<div class="controls">
+									<input type="number" name="" class="form-control" value="" > 
 								</div>
 							</div>
+						
+						
+
+				
+					 			<div class="form-group">
+									<label class="col-form-label col-md-2">结算日期</label>
+									<div class="col-md-10">
+									<input class="form-control" type="date" name="orderDate" value="">
+									</div>
+								</div>
+					
+					
+							<div class="form-group">
+								<h5>备注<span class="text-danger"></span></h5>
+								<div class="controls">
+									<input type="text" name="" class="form-control" value="" > 
+								</div>
+						</div>
+				
+						</div>
+							
 						</div>
 					  </div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<h5>Checkbox <span class="text-danger">*</span></h5>
-									<div class="controls">
-										<input type="checkbox" id="checkbox_1" value="single">
-										<label for="checkbox_1">Check this custom checkbox</label>
-									</div>								
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<h5>Checkbox Group <span class="text-danger">*</span></h5>
-									<div class="controls">
-										<fieldset>
-											<input type="checkbox" id="checkbox_2" value="x">
-											<label for="checkbox_2">I am unchecked Checkbox</label>
-										</fieldset>
-										<fieldset>
-											<input type="checkbox" id="checkbox_3" value="y">
-											<label for="checkbox_3">I am unchecked too</label>
-										</fieldset>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<h5>Select Max 2 Checkbox<span class="text-danger">*</span></h5>
-									<div class="controls">
-										<fieldset>
-											<input type="checkbox" id="checkbox_4" data-validation-maxchecked-maxchecked="2" data-validation-maxchecked-message="Don't be greedy!">
-											<label for="checkbox_4">I am unchecked Checkbox</label>
-										</fieldset>
-										<fieldset>
-											<input type="checkbox" id="checkbox_5" data-validation-maxchecked-maxchecked="2" data-validation-maxchecked-message="Don't be greedy!">
-											<label for="checkbox_5">I am unchecked too</label>
-										</fieldset>
-										<fieldset>
-											<input type="checkbox" id="checkbox_6" data-validation-maxchecked-maxchecked="2" data-validation-maxchecked-message="Don't be greedy!">
-											<label for="checkbox_6">You can check me</label>
-										</fieldset>
-									</div> 
-									<small>Select any 2 options</small> 
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<h5>Minimum 2 Checkbox selection<span class="text-danger">*</span></h5>
-									<div class="controls">
-										<fieldset>
-											<input type="checkbox" id="checkbox_7" value="1" data-validation-minchecked-minchecked="2" data-validation-minchecked-message="Choose at least two" name="styled_min_checkbox">
-											<label for="checkbox_7">I am unchecked Checkbox</label>
-										</fieldset>
-										<fieldset>
-											<input type="checkbox" id="checkbox_8" value="2" data-validation-minchecked-minchecked="2" data-validation-minchecked-message="Choose at least two" name="styled_min_checkbox">
-											<label for="checkbox_8">I am unchecked too</label>
-										</fieldset>
-										<fieldset>
-											<input type="checkbox" id="checkbox_9" value="3" data-validation-minchecked-minchecked="2" data-validation-minchecked-message="Choose at least two" name="styled_min_checkbox">
-											<label for="checkbox_9">You can check me</label>
-										</fieldset>
-									</div> 
-									<small>Select any 2 options</small> 
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<h5>Radio Buttons <span class="text-danger">*</span></h5>
-									<fieldset class="controls">
-										<input name="group1" type="radio" id="radio_1" value="1" required>
-										<label for="radio_1">Check Me</label>
-									</fieldset>
-									<fieldset>
-										<input name="group1" type="radio" id="radio_2" value="2">
-										<label for="radio_2">Or Me</label>									
-									</fieldset>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<h5>Inline Radio Buttons <span class="text-danger">*</span></h5>
-									<div class="controls">
-										<fieldset>
-											<input name="group2" type="radio" id="radio_3" value="Yes" required>
-											<label for="radio_3">Check Me</label>
-										</fieldset>
-										<fieldset>
-											<input name="group2" type="radio" id="radio_4" value="No">
-											<label for="radio_4">Or Me</label>
-										</fieldset>
-									</div>
-								</div>
-							</div>
-						</div>
+						
 						<div class="text-xs-right">
-							<button type="submit" class="btn btn-info">Submit</button>
+							<button type="submit" class="btn btn-info">提交</button>
+							<button type="button" onclick="goBack()" class="btn btn-info">取消</button>
 						</div>
 					</form>
 
@@ -335,6 +356,15 @@
 			  </div>
 			  <!-- /.row -->
 			</div>
+							
+							
+						</div>
+
+					</div>
+
+
+		 <!-- Basic Forms -->
+		  
 			<!-- /.box-body -->
 		  </div>
 		  <!-- /.box -->
@@ -364,7 +394,6 @@
   
   <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
-</div>
 <!-- ./wrapper -->
 	
 	<!-- ./side demo panel -->
@@ -393,6 +422,63 @@
 	<script src="/assets/vendor_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
 	<script src="/assets/vendor_plugins/timepicker/bootstrap-timepicker.min.js"></script>
 	
-	<script
+	<script type="text/javascript">
+	
+	$(function(){
+		getProductOutPrice();
+		getProductInPrice();
+	});
+	
+	function getProductOutPrice(){
+		var pc=$("#productCodeOut").val();
+		var wei=$("input[name='weightOut']:checked").val();
+		
+		
+		$.ajax({
+			url:"http://localhost:8080/order/getProductPrice",
+			data:{productCode :pc,weight:wei},
+			success: function (result){
+				$("#unitpriceOut").val(result);
+			},
+			error: function(){
+				console.log("Send Request Fail..")
+			}
+		})
+	}
+	
+	function getProductInPrice(){
+		var pc=$("#productCodeIn").val();
+		var wei=$("input[name='weightIn']:checked").val();
+		
+		
+		$.ajax({
+			url:"http://localhost:8080/order/getProductPrice",
+			data:{productCode :pc,weight:wei},
+			success: function (result){
+				$("#unitpriceIn").val(result);
+			},
+			error: function(){
+				console.log("Send Request Fail..")
+			}
+		})
+	}
+	
+	function goBack(){
+		window.location.href="http://localhost:8080/order/orderoutlist"; 
+		
+	}
+	
+	function addOrderlist(){
+		$("#orderList").show();
+		
+		alert($("#productCodeIn").val());
+		/* var newtr=$("#tempTr").clone();
+		newtr.removeAttr("id");
+		newtr.find("th[name=tempUnit]").text();
+		newtr.find("th[name=tempWei]")
+		newtr.find("th[name=tempQuan]") */
+		
+	}
+	</script>
 </body>
 </html>

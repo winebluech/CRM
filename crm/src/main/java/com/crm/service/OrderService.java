@@ -28,4 +28,28 @@ public interface OrderService {
 	 * @return
 	 */
 	public List<ProductInfo> toAddOrderOutService();
+	/**
+	 * 添加订单
+	 */
+	public void addOrder(Order order);
+	/**
+	 * 获取商品近期的价格
+	 * @param productCode
+	 * @param weight
+	 * @return
+	 */
+	public Double getProductPrice(String productCode, String weight);
+	/**
+	 * 
+	 * @param orderCode 
+	 * @return
+	 */
+	public Order queryOrderByOrderCode(String orderCode);
+	/**
+	 * 
+	 * @param order
+	 */
+	public void editOrderByOrderCode(Order order);
+	
+	public void deleteOrderAndOrderProductByOrderCode(String orderCode);
 }

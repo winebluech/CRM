@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的 -->
+<mapper namespace="com.crm.dao.MenuDao">
+    
+    <resultMap id="baseResult" type="com.crm.model.Menu">
+		<id column="id" property="id"/>
+		<result column="menucode" property="menuCode"/> 
+		<result column="menuname" property="menuName"/>
+		<result column="parentid" property="parentId"/>
+		<result column="path" property="path"/>
+		<result column="level" property="level"/>
+		<result column="is_menu" property="is_menu"/> 
+		<result column="is_delete" property="is_delete"/> 
+		<collection property="childerMenus" ofType="com.crm.model.Menu"
+				column="menucode" select="queryMenuByParentId"/>
+	</resultMap>
+
+	
+
+	 <select id="queryAllMenu"  resultMap="baseResult">
+       SELECT * FROM MENU WHERE IS_DELETE=0
+     </select>
+  
+     <select id="queryMenuByID" parameterType="int" resultMap="baseResult">
+       SELECT * FROM MENU WHERE IS_DELETE=0 AND id=#{id}
+     </select>
+    
+     <select id="queryMenuByParentId" parameterType="string" resultMap="baseResult">
+       SELECT * FROM MENU WHERE IS_DELETE=0 AND parentid=#{menucode}
+     </select>
+    
+    
+      <insert id="addmenu" parameterType="com.crm.model.Menu" useGeneratedKeys="true" keyProperty="id">
+       INSERT INTO MENU 
+	   (id,menucode,menuname,parentid,path,level,is_menu,is_delete) 
+	   VALUES
+	   (
+	   #{id},#{menuCode},#{menuName},#{parentId},#{path},#{level},#{is_menu},
+	   #{is_delete}
+	   )
+    </insert>
+    
+    
+    
+</mapper>

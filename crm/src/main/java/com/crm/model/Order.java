@@ -5,21 +5,30 @@ import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 public class Order {
 
 	private String id;
 	private Integer orderType;
+	
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date orderDate;
 	private String orderCode;
 	
 	private String orderStatus;
 	private String remark;
-	private String is_delete;
+	private Integer is_delete;
+	
+	private String orderAddress;
 	
 	//订单详情
 	private String productCode;
 	private String productName;
-	private Double quantity;
+	private Integer quantity;
 	private Double weight;
 	/**
 	 * 单价
@@ -33,10 +42,17 @@ public class Order {
 	 * 预计盈利
 	 */
 	private BigDecimal profit;
+	/**
+	 * 结算
+	 */
+	private BigDecimal settlement;
 	
 	
 	
-	//订单补充
+	//订单价格补充
+	/**
+	 * 运费
+	 */
 	private BigDecimal orderFreight;
 	private BigDecimal orderHandlingCharge;
 	private BigDecimal alternatefieldone;
@@ -78,10 +94,10 @@ public class Order {
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
-	public Double getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(Double quantity) {
+	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
 	public Double getWeight() {
@@ -120,10 +136,10 @@ public class Order {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getIs_delete() {
+	public Integer getIs_delete() {
 		return is_delete;
 	}
-	public void setIs_delete(String is_delete) {
+	public void setIs_delete(Integer is_delete) {
 		this.is_delete = is_delete;
 	}
 	public List<OrderProduct> getOrderDetails() {
@@ -186,6 +202,18 @@ public class Order {
 	}
 	public void setProfit(BigDecimal profit) {
 		this.profit = profit;
+	}
+	public BigDecimal getSettlement() {
+		return settlement;
+	}
+	public void setSettlement(BigDecimal settlement) {
+		this.settlement = settlement;
+	}
+	public String getOrderAddress() {
+		return orderAddress;
+	}
+	public void setOrderAddress(String orderAddress) {
+		this.orderAddress = orderAddress;
 	}
 
 	

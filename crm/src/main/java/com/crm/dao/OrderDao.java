@@ -10,5 +10,21 @@ import com.crm.model.Order;
 	public interface OrderDao {
 
 	List<Order> queryOrderByOrderType(int orderType);
+
+	void addOrder(Order order);
+
+	void addOrderProduct(Order order);
+
+	Order getProductPriceForProductCodeAndWeight(String productCode, String weight);
+
+	Order queryOrderByOrderCode(String orderCode);
+
+	void updateOrderByOrderCode(Order order);
+
+	void updateOrderProductByOrderCode(Order order);
+	
+	void deleteOrderProductByOrderCode(String orderCode);
+	
+	void deleteOrderByOrderCode(String orderCode);
 	
 	}
