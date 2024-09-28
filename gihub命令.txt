@@ -7,3 +7,8 @@ git status 查看当前状态
 git pull origin main 更新分支
 
 git push origin main提交代码
+
+免费数据库密码
+crmsqlpub02
+wineblue02
+NIfIpsbroiB84jlF

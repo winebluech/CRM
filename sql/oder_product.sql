@@ -20,8 +20,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for oder_product
 -- ----------------------------
-DROP TABLE IF EXISTS `oder_product`;
-CREATE TABLE `oder_product`  (
+DROP TABLE IF EXISTS `order_product`;
+CREATE TABLE `order_product`  (
   `id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `ordercode` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '订单号',
   `productcode` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '产品代码',
