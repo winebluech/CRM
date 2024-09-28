@@ -220,7 +220,32 @@
 
     if (opts.zoom) {
       $chartContainer.on('wheel', function(event) {
-        event.preventDefault();
+		  
+		  
+		 console.log(event.deltaY+"1");console.log(event.originalEvent.deltaY+"2");
+        event.preventDefault();//阻止默认滚轮行为
+		
+		let scalDemo=1;
+		let d = event.deltaY < 0 ? 0.1 : -0.1;
+		scalDemo = scalDemo * (1 + d);
+		
+	var rect=	this.getBoundingClientRect();
+const max = {
+  x: (d * rect.width) / 2,
+  y: (d * rect.height) / 2,
+};
+		
+		const mouseOffset = {
+		x: event.clientX - rect.x,
+		y: event.clientY - rect.y
+		};
+		var x=rect.x;
+		var y=rect.y;
+		
+		x -= d * (mouseOffset.x - x) - max.x;
+		y -= d * (mouseOffset.y - y) - max.y;
+		
+		
         var lastTf = $chart.css('transform');
         var newScale  = 1 + (event.originalEvent.deltaY > 0 ? -0.2 : 0.2);
         if (lastTf === 'none') {
