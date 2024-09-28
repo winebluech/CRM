@@ -80,7 +80,7 @@
 						<div class="form-group">
 								<h5>产品名称<span class="text-danger">*</span></h5>
 								<div class="controls">
-									<select name="productCode" id="productCode"  class="form-select" onchange="getProductPrice()">
+									<select name="productCode" id="productCodeOut"  class="form-select" onchange="getProductOutPrice()">
 										<option  th:each="productInfo : ${productList}" th:value="${productInfo.productCode}"  th:text="${productInfo.productName}+'('+${productInfo.remark}+')'"></option>
 									</select>
 								</div>
@@ -89,9 +89,9 @@
 						<div class="form-group">
 						<h5>重量 <span class="text-danger"></span></h5>
 						<div class="demo-radio-button" style="padding-top:5px">
-						<input name="weight" type="radio" id="radio_1"  value="50" checked="" onchange="getProductPrice()">
+						<input name="weightOut" type="radio" id="radio_1"  value="50" checked="" onchange="getProductOutPrice()">
 						<label for="radio_1" style="margin-bottom:0px;min-width: 150px">大桶（50KG）</label>
-						<input name="weight" type="radio" id="radio_2" value="20" onchange="getProductPrice()">
+						<input name="weightOut" type="radio" id="radio_2" value="20" onchange="getProductOutPrice()">
 						<label for="radio_2" style="margin-bottom:0px;min-width: 70px">小桶(20KG)</label>
 						</div>
 						</div>
@@ -100,7 +100,7 @@
 						<div class="form-group">
 								<h5>产品单价（吨） <span class="text-danger">*</span></h5>
 								<div class="controls">
-									<input type="text" id="unitprice" name="unitprice" class="form-control" value="" required data-validation-required-message="必填字段"> 
+									<input type="text" id="unitpriceOut" name="unitprice" class="form-control" value="" required data-validation-required-message="必填字段"> 
 								</div>
 						</div>
 						<div class="form-group">
@@ -156,7 +156,7 @@
 			<div class="box-body">
 			
 			<form  action="/order/order/whiteLatexInStorage">
-			<h4 class="box-title text-info mb-0"><i class="ti-user me-15"></i>订单信息</h4>
+			<h4 class="box-title text-primary mb-0"><i class="ti-user me-15"></i>添加商品</h4>
 			<hr class="my-15">
 			  <div class="row">
 				<div class="col">
@@ -166,10 +166,10 @@
 						<div class="col-12" style="padding-bottom:30px">						
 							
 							
-							<div class="form-group" style="display:ruby;">
+							<div class="form-group" >
 								<h5>订单编号:</h5>
-								<div class="controls" style="padding-left:30px">
-									<input type="text" id="unitprice" name="unitprice" class="form-control" disabled ="disabled " value="" required data-validation-required-message="必填字段"> 
+								<div class="controls" >
+									<input type="text" id="orderCodeIn" name="orderCodeIn" class="form-control" disabled ="disabled " th:value="${newOrderCode}"  required data-validation-required-message="必填字段"> 
 								</div>
 							</div>
 							
@@ -180,28 +180,32 @@
 									</div>
 								</div>
 							
-								</div>
-						<h4 class="box-title text-info mb-0"><i class="ti-user me-15"></i>50KG胶</h4>
-						<hr class="my-15">
-				<div class="col-12">		
 								<div class="form-group">
+								<h5>产品名称<span class="text-danger">*</span></h5>
+								<div class="controls">
+									<select name="productCode" id="productCodeIn"  class="form-select" onchange="getProductInPrice()">
+										<option  th:each="productInfo : ${productList}" th:value="${productInfo.productCode}"  th:text="${productInfo.productName}+'('+${productInfo.remark}+')'"></option>
+									</select>
+								</div>
+							</div>
+							
+							<div class="form-group">
 						<h5>重量 <span class="text-danger"></span></h5>
 						<div class="demo-radio-button" style="padding-top:5px">
-						<input name="weight" type="radio" id="radio_1"  value="50" checked="" onchange="getProductPrice()">
-						<label for="radio_1" style="margin-bottom:0px;min-width: 150px">大桶（50KG）</label>
-						<input name="weight" type="radio" id="radio_2" value="20" onchange="getProductPrice()">
-						<label for="radio_2" style="margin-bottom:0px;min-width: 70px">小桶(20KG)</label>
+						<input name="weightIn" type="radio" id="radio_3"  value="50" checked="" onchange="getProductInPrice()">
+						<label for="radio_3" style="margin-bottom:0px;min-width: 150px">大桶（50KG）</label>
+						<input name="weightIn" type="radio" id="radio_4" value="20" onchange="getProductInPrice()">
+						<label for="radio_4" style="margin-bottom:0px;min-width: 70px">小桶(20KG)</label>
 						</div>
 						</div>
-				
-					<h4 class="box-title text-info mb-0"><i class="ti-user me-15"></i>20KG胶</h4>
-						<hr class="my-15">
+						
 						<div class="form-group">
 								<h5>产品单价（吨） <span class="text-danger">*</span></h5>
 								<div class="controls">
-									<input type="text" id="unitprice" name="unitprice" class="form-control" value="" required data-validation-required-message="必填字段"> 
+									<input type="text" id="unitpriceIn" name="unitpriceIn" class="form-control" value="" required data-validation-required-message="必填字段"> 
 								</div>
 						</div>
+						
 						<div class="form-group">
 								<h5>数量（桶） <span class="text-danger">*</span></h5>
 								<div class="controls">
@@ -209,28 +213,75 @@
 								</div>
 						</div>
 						
-
+							<div class="text-xs-right">
+							<button type="button" class="btn btn-info" onclick="addOrderlist()">添加</button>
+						</div>
+						
+								</div>
+								
+				</div>
+					  </div>
+								
+			
+						
+						
+						
+		<div class="col-12 col-lg-12" id="orderList" style="display:none">
+		
+			<h4 class="box-title text-info mb-0"><i class="ti-user me-15"></i>订单信息</h4>
+			<hr class="my-15">
+			  <div class="box">
+				<div class="box-header with-border">
+				  <h4 class="box-title">Small table</h4>
+				</div>
+				<!-- /.box-header -->
+				<div class="box-body">
+					<div class="table-responsive">
+					  <table class="table table-sm mb-0">
+						  <tbody>
+							<tr>
+							  <th scope="col">商品名称</th>
+							  <th scope="col">单价</th>
+							  <th scope="col">重量</th>
+							  <th scope="col">数量</th>
+							</tr>
+						  </tbody>
+						  <tbody>
+							<tr id="tempTr" style="display:none">
+							  <td name="tempName">白乳胶</td>
+							  <td name="tempUnit">1800</td>
+							  <td name="tempWei">大桶</td>
+							  <td name="tempQuan">200桶</td>
+							</tr>
+						  </tbody>
+						</table>
+					</div>
+				</div>
 				
-					 		
-					
-					
-							<div class="form-group">
+											<div class="form-group">
 								<h5>备注<span class="text-danger"></span></h5>
 								<div class="controls">
 									<input type="text" name="" class="form-control" value="" > 
 								</div>
 						</div>
-					</div>
 					
 							
 					
-						</div>
-					  </div>
+					
 						
 						<div class="text-xs-right">
 							<button type="submit" class="btn btn-info">提交</button>
 							<button type="button" onclick="goBack()" class="btn btn-info">取消</button>
 						</div>
+				<!-- /.box-body -->
+			  </div>
+			  <!-- /.box -->
+			</div>
+				
+					 		
+					
+					
+
 					</form>
 
 				</div>
@@ -374,19 +425,37 @@
 	<script type="text/javascript">
 	
 	$(function(){
-		getProductPrice();
+		getProductOutPrice();
+		getProductInPrice();
 	});
 	
-	function getProductPrice(){
-		var pc=$("#productCode").val();
-		var wei=$("input[name='weight']:checked").val();
+	function getProductOutPrice(){
+		var pc=$("#productCodeOut").val();
+		var wei=$("input[name='weightOut']:checked").val();
 		
 		
 		$.ajax({
 			url:"http://localhost:8080/order/getProductPrice",
 			data:{productCode :pc,weight:wei},
 			success: function (result){
-				$("#unitprice").val(result);
+				$("#unitpriceOut").val(result);
+			},
+			error: function(){
+				console.log("Send Request Fail..")
+			}
+		})
+	}
+	
+	function getProductInPrice(){
+		var pc=$("#productCodeIn").val();
+		var wei=$("input[name='weightIn']:checked").val();
+		
+		
+		$.ajax({
+			url:"http://localhost:8080/order/getProductPrice",
+			data:{productCode :pc,weight:wei},
+			success: function (result){
+				$("#unitpriceIn").val(result);
 			},
 			error: function(){
 				console.log("Send Request Fail..")
@@ -396,6 +465,18 @@
 	
 	function goBack(){
 		window.location.href="http://localhost:8080/order/orderoutlist"; 
+		
+	}
+	
+	function addOrderlist(){
+		$("#orderList").show();
+		
+		alert($("#productCodeIn").val());
+		/* var newtr=$("#tempTr").clone();
+		newtr.removeAttr("id");
+		newtr.find("th[name=tempUnit]").text();
+		newtr.find("th[name=tempWei]")
+		newtr.find("th[name=tempQuan]") */
 		
 	}
 	</script>

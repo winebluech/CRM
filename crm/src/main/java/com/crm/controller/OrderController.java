@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.crm.model.Order;
 import com.crm.model.ProductInfo;
 import com.crm.service.OrderService;
+import com.crm.unit.SnowFlake;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -39,6 +40,8 @@ public class OrderController {
 	public String orderAddPage(Model model) {
 		
 		List<ProductInfo> productList=orderservice.toAddOrderOutService();
+		String newOrderCode=SnowFlake.getOrderNum();
+		model.addAttribute("newOrderCode", newOrderCode);
 		model.addAttribute("productList", productList);
 		return "order/orderOutAdd";
 	}
